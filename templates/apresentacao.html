@@ -57,7 +57,7 @@
   <main class="deck-page">
     <div class="deck-intro">
       <h2>🌱 Sistema de Irrigação Inteligente</h2>
-      <p>Use as setas do teclado, arraste no celular ou clique nos botões abaixo para navegar. Clique em qualquer ícone de 🌧️ para ativar o modo tempestade.</p>
+      <p>Use as setas do teclado, arraste no celular ou toque nos botões abaixo para navegar. Nas notícias, o cenário muda sozinho: sol e terra rachada onde falta água, tempestade onde chove demais.</p>
     </div>
 
     <div class="deck-wrap" id="deckWrap">
@@ -78,8 +78,8 @@
           <div class="notes-panel" hidden>(~30s) Bom dia/tarde. Meu nome é Guilherme e vou apresentar meu projeto de TCC: um sistema de irrigação inteligente. Orientação do Prof. Pedro Luís Antonelli.</div>
         </section>
 
-        <!-- SLIDE 2 — Notícia: Falta de Água -->
-        <section class="slide">
+        <!-- SLIDE 2 — Notícia: Falta de Água (cenário: seca) -->
+        <section class="slide slide-seco">
           <span class="slide-eyebrow">Notícia · Slide 2 de 15</span>
           <div class="news-header">
             <div class="icon-badge">🌽</div>
@@ -91,16 +91,16 @@
           <p class="news-quote">"Milho Safrinha em alerta: seca acumula perdas de até 60% no Sul e Centro-Oeste"</p>
           <p class="news-body">Em Francisco Beltrão (PR), a chuva faltou exatamente entre o florescimento e o enchimento de grãos do milho — a fase de maior consumo de água da planta. Produtores acumularam perdas de produtividade próximas a 60%.</p>
           <div class="news-bottom">
-            <span class="stat-callout">-60%<br></span>
+            <span class="stat-callout">-60%</span>
             <span class="news-footnote">de produtividade<br>Fonte: Portal Mais Agro / Syngenta, com dados do INMET, maio de 2026.</span>
           </div>
           <div class="notes-panel" hidden>(~30s) Primeira notícia: na safra de milho de 2026, no Paraná e Mato Grosso do Sul, a chuva faltou exatamente na fase em que a planta mais precisa de água — o florescimento. Resultado: perdas de até 60% da produtividade.</div>
         </section>
 
-        <!-- SLIDE 3 — Notícia: Excesso de Água (gatilho de chuva) -->
-        <section class="slide">
+        <!-- SLIDE 3 — Notícia: Excesso de Água (cenário: tempestade) -->
+        <section class="slide slide-chuva">
           <span class="slide-eyebrow">Notícia · Slide 3 de 15</span>
-          <div class="news-header rain-trigger" title="Clique para simular a tempestade ⛈️">
+          <div class="news-header">
             <div class="icon-badge">⛈️</div>
             <div>
               <h2 class="slide-title-main" style="font-size:24px;">Notícia: Excesso de Água</h2>
@@ -109,19 +109,17 @@
           </div>
           <p class="news-quote">"O impacto da incerteza climática nas produções de arroz no Rio Grande do Sul em 2026"</p>
           <p class="news-body">Chuvas de 120 a 150 milímetros em 24 horas alagaram lavouras de arroz no RS: "as áreas alagam e a água demora muito para baixar". O solo encharcado compromete a oxigenação das raízes e atrasa a colheita.</p>
-          <div class="news-bottom rain-trigger">
+          <div class="news-bottom">
             <span class="stat-callout info">120–150mm</span>
-            <span class="news-footnote">de chuva em 24h<br>Fonte: FOCAS/Uniso, 2026.
-              <span class="rain-hint">🌧️ clique para ver a tempestade</span>
-            </span>
+            <span class="news-footnote">de chuva em 24h<br>Fonte: FOCAS/Uniso, 2026.</span>
           </div>
           <div class="notes-panel" hidden>(~30s) Segunda notícia, e o lado oposto do problema: no Rio Grande do Sul, chuvas de até 150 milímetros em 24 horas alagaram lavouras de arroz. Excesso de água também compromete a produção — encharca a raiz e atrasa a colheita.</div>
         </section>
 
-        <!-- SLIDE 4 — Notícia: Dependência da Chuva (gatilho de chuva) -->
-        <section class="slide">
+        <!-- SLIDE 4 — Notícia: Dependência da Chuva (cenário: tempestade) -->
+        <section class="slide slide-chuva">
           <span class="slide-eyebrow">Notícia · Slide 4 de 15</span>
-          <div class="news-header rain-trigger" title="Clique para simular a tempestade ⛈️">
+          <div class="news-header">
             <div class="icon-badge">☁️</div>
             <div>
               <h2 class="slide-title-main" style="font-size:24px;">Notícia: Dependência da Chuva</h2>
@@ -148,7 +146,7 @@
               <h3>Tempo fixo</h3>
               <p>Liga a irrigação sempre no mesmo horário — pode molhar demais ou de menos, chova ou faça sol.</p>
             </div>
-            <div class="mini-card rain-trigger" title="Clique para ver a chuva sendo ignorada 🌧️">
+            <div class="mini-card">
               <div class="icon-badge">🌧️🚫</div>
               <h3>Limiar simples de umidade</h3>
               <p>Reage à umidade do solo, mas ignora a previsão do tempo.</p>
@@ -179,7 +177,7 @@
               <h3>Evapotranspiração (ETc)</h3>
               <p>cálculo científico da necessidade hídrica da cultura (FAO-56)</p>
             </div>
-            <div class="mini-card destaque rain-trigger" title="Clique para ver a previsão em ação 🌧️">
+            <div class="mini-card destaque">
               <div class="icon-badge">☁️</div>
               <h3>Previsão climática</h3>
               <p>consultada via API antes de decidir irrigar</p>
@@ -229,7 +227,7 @@
               <p>lê umidade do solo e do ambiente</p>
             </div>
             <span class="flow-arrow">→</span>
-            <div class="flow-step rain-trigger" title="Clique para ver a chuva chegando 🌧️">
+            <div class="flow-step">
               <div class="icon-badge">☁️</div>
               <h4>API de Clima</h4>
               <p>consulta previsão de chuva</p>
@@ -309,7 +307,7 @@
               <h4>Saúde da planta</h4>
               <p>altura, folhas e biomassa</p>
             </div>
-            <div class="metric-item rain-trigger" title="Clique para ver o clima 🌧️">
+            <div class="metric-item">
               <div class="icon-badge">☁️</div>
               <h4>Precisão do clima</h4>
               <p>previsão × chuva real</p>
@@ -398,7 +396,7 @@
               <span class="ref-label">Portal Mais Agro / Syngenta, 2026 — caso do milho safrinha (PR/MS, -60%)</span>
               <a href="https://maisagro.syngenta.com.br/dia-a-dia-do-campo/milho-safrinha-em-alerta-seca-acumula-perdas-de-ate-60-no-sul-e-centro-oeste/" target="_blank" rel="noopener">maisagro.syngenta.com.br</a>
             </div>
-            <div class="ref-item rain-trigger" title="Clique para ver a chuva 🌧️">
+            <div class="ref-item">
               <span class="ref-label">FOCAS/Uniso, 2026 — caso do arroz no RS (excesso de chuva, alagamento)</span>
               <a href="https://focas.uniso.br/index.php/2026/05/27/o-impacto-da-incerteza-climatica-nas-producoes-de-arroz-no-rio-grande-do-sul-em-2026/" target="_blank" rel="noopener">focas.uniso.br</a>
             </div>
@@ -448,18 +446,6 @@
     <p>Apresentação interativa gerada a partir dos slides originais do TCC — Engenharia de Computação, FHO.
        Autor: Guilherme Augusto Scaglia · Orientador: Prof. Pedro Luís Antonelli.</p>
   </footer>
-
-  <!-- Botão flutuante + camada de tempestade -->
-  <button class="storm-fab" id="btnStorm" type="button">🌧️ Modo tempestade</button>
-  <div class="storm-overlay" id="stormOverlay" hidden>
-    <div class="rain-layer" id="rainLayer"></div>
-    <button class="storm-close" id="btnStormClose" type="button">✕ Fechar tempestade</button>
-    <div class="storm-content">
-      <div class="storm-icon">⛈️</div>
-      <h3>Modo tempestade ativado</h3>
-      <p>É exatamente nesse cenário que o grupo Experimental cancela a irrigação automaticamente — o sistema já sabe que vai chover.</p>
-    </div>
-  </div>
 
   <script src="{{ url_for('static', filename='js/banner.js') }}"></script>
   <script src="{{ url_for('static', filename='js/apresentacao.js') }}"></script>

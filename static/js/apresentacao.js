@@ -46,7 +46,6 @@
   });
 
   window.addEventListener("keydown", (e) => {
-    if (document.body.classList.contains("storm-active")) return;
     if (["ArrowRight", "PageDown"].includes(e.key)) goTo(current + 1);
     if (["ArrowLeft", "PageUp"].includes(e.key)) goTo(current - 1);
     if (e.key === "Home") goTo(0);
@@ -63,65 +62,4 @@
   });
 
   render();
-
-  // ================= MODO TEMPESTADE =================
-  const overlay = document.getElementById("stormOverlay");
-  const rainLayer = document.getElementById("rainLayer");
-  const deckWrap = document.getElementById("deckWrap");
-  const btnStorm = document.getElementById("btnStorm");
-  const btnStormClose = document.getElementById("btnStormClose");
-  let stormInterval = null;
-
-  function spawnRaindrops(n) {
-    rainLayer.innerHTML = "";
-    const frag = document.createDocumentFragment();
-    for (let i = 0; i < n; i++) {
-      const drop = document.createElement("span");
-      drop.className = "raindrop";
-      drop.style.left = `${Math.random() * 100}%`;
-      drop.style.height = `${40 + Math.random() * 70}px`;
-      drop.style.animationDuration = `${0.5 + Math.random() * 0.7}s`;
-      drop.style.animationDelay = `${Math.random() * 2}s`;
-      frag.appendChild(drop);
-    }
-    rainLayer.appendChild(frag);
-  }
-
-  function flashOnce() {
-    overlay.classList.add("flash");
-    deckWrap.classList.add("shake");
-    setTimeout(() => {
-      overlay.classList.remove("flash");
-      deckWrap.classList.remove("shake");
-    }, 220);
-  }
-
-  function startStorm() {
-    overlay.hidden = false;
-    document.body.classList.add("storm-active");
-    spawnRaindrops(90);
-    clearInterval(stormInterval);
-    stormInterval = setInterval(flashOnce, 3000 + Math.random() * 3000);
-  }
-
-  function stopStorm() {
-    overlay.hidden = true;
-    document.body.classList.remove("storm-active");
-    clearInterval(stormInterval);
-    rainLayer.innerHTML = "";
-  }
-
-  btnStorm.addEventListener("click", () => {
-    if (overlay.hidden) startStorm(); else stopStorm();
-  });
-  btnStormClose.addEventListener("click", stopStorm);
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) stopStorm();
-  });
-  document.querySelectorAll(".rain-trigger").forEach((el) => {
-    el.addEventListener("click", startStorm);
-  });
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !overlay.hidden) stopStorm();
-  });
 })();

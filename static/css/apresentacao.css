@@ -15,14 +15,6 @@
   overflow: hidden;
   border: 1px solid #E2EBEB;
 }
-.deck-wrap.shake { animation: deckShake 0.22s ease; }
-@keyframes deckShake {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-4px, 2px); }
-  50% { transform: translate(3px, -2px); }
-  75% { transform: translate(-2px, 1px); }
-}
-
 .deck-progress-track {
   height: 4px;
   background: var(--card-bg);
@@ -120,13 +112,116 @@
 .stat-callout.positivo { color: var(--secondary); }
 .stat-callout.info { color: var(--primary); }
 .news-footnote { font-size: 11px; color: var(--muted); }
-.rain-trigger { cursor: pointer; position: relative; }
-.rain-trigger:hover .icon-badge { box-shadow: 0 0 0 6px rgba(2, 128, 144, 0.12); }
-.rain-hint {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 11px; color: var(--primary);
-  font-weight: 600; margin-top: 4px;
+
+/* ---------- CENÁRIOS AMBIENTE: SECA / TEMPESTADE ---------- */
+/* z-index:0 no slide cria um contexto de empilhamento local, então os
+   pseudo-elementos com z-index:-1 ficam atrás do conteúdo (que é z-index:auto),
+   sem precisar tocar em cada filho individualmente. */
+.slide-seco, .slide-chuva {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
 }
+.slide-seco::before, .slide-seco::after,
+.slide-chuva::before, .slide-chuva::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* --- Seca: sol intenso + chão rachado --- */
+.slide-seco {
+  background: linear-gradient(180deg, #FFE9A8 0%, #FCC157 32%, #DC8A34 64%, #8B4A1E 100%);
+}
+.slide-seco::before {
+  top: -35%; left: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 255, 255, 0.4) 0deg 3deg, transparent 3deg 16deg);
+  opacity: 0.55;
+  animation: sunSpin 50s linear infinite;
+}
+@keyframes sunSpin {
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+.slide-seco::after {
+  left: 0; right: 0; bottom: 0;
+  height: 42%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='100' viewBox='0 0 140 100'%3E%3Cpath d='M0 12 L22 22 L16 44 L38 48 L32 74 M22 22 L48 16 L64 34 M38 48 L58 54 L52 80 M64 34 L86 28 L96 48 M58 54 L80 60 L90 86 M96 48 L118 42 M90 86 L118 90' stroke='rgba(60,25,5,0.4)' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-size: 160px 115px;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
+}
+.slide-seco .slide-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.85);
+  color: #7A3B12;
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+.slide-seco .news-header,
+.slide-seco .news-quote,
+.slide-seco .news-body,
+.slide-seco .news-bottom {
+  background: rgba(255, 250, 240, 0.82);
+  backdrop-filter: blur(2px);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 0;
+}
+
+/* --- Chuva: tempestade com raios e chuva animada --- */
+.slide-chuva {
+  background: linear-gradient(165deg, #13242e 0%, #1c3745 45%, #0d1a20 100%);
+}
+.slide-chuva::before {
+  inset: -20% -10%;
+  background-image: repeating-linear-gradient(115deg, transparent 0 6px, rgba(191, 233, 228, 0.16) 7px, transparent 9px);
+  animation: rainStreak 0.4s linear infinite;
+}
+@keyframes rainStreak {
+  from { transform: translateY(-60px); }
+  to { transform: translateY(0); }
+}
+.slide-chuva::after {
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  animation: lightningFlash 8s infinite;
+}
+@keyframes lightningFlash {
+  0%, 92%, 100% { opacity: 0; }
+  93% { opacity: 0.5; }
+  94% { opacity: 0.05; }
+  95.5% { opacity: 0.3; }
+  97% { opacity: 0; }
+}
+.slide-chuva .slide-eyebrow {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--primary-dark);
+  padding: 3px 11px;
+  border-radius: 999px;
+}
+.slide-chuva .news-header,
+.slide-chuva .news-quote,
+.slide-chuva .news-body,
+.slide-chuva .news-bottom {
+  background: rgba(8, 22, 30, 0.6);
+  backdrop-filter: blur(3px);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 0;
+  color: #EAF6F4;
+}
+.slide-chuva .slide-title-main { color: #fff; }
+.slide-chuva .news-quote { color: #fff; }
+.slide-chuva .news-source { color: #9FD4CE; }
+.slide-chuva .news-footnote { color: #BFE9E4; }
+.slide-chuva .stat-callout.info { color: #7FE3D6; }
 
 /* ---------- SLIDE: 3 CARDS (por que / grupos) ---------- */
 .card-row {
@@ -334,96 +429,62 @@
 }
 .deck-toggle-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-/* ---------- BOTÃO FLUTUANTE DE TEMPESTADE ---------- */
-.storm-fab {
-  position: fixed;
-  right: 22px;
-  bottom: 24px;
-  z-index: 150;
-  background: var(--primary-dark);
-  color: white;
-  border: none;
-  border-radius: 999px;
-  padding: 13px 18px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 8px 22px rgba(1, 58, 64, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.storm-fab:hover { opacity: 0.92; }
+/* ============ RESPONSIVO — MOBILE ============ */
+@media (max-width: 640px) {
+  .deck-page { padding: 14px 12px 36px; }
+  .deck-intro h2 { font-size: 17px; }
+  .deck-intro p { font-size: 12.5px; }
 
-/* ============ MODO TEMPESTADE ============ */
-.storm-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 500;
-  background: linear-gradient(180deg, #0B1A24 0%, #142C38 55%, #0E2028 100%);
-  overflow: hidden;
-}
-.storm-overlay[hidden] { display: none; }
+  .slide {
+    padding: 22px 16px 20px;
+    gap: 14px;
+    min-height: 420px;
+  }
+  .slide-title-main { font-size: 20px; }
+  .slide-subtitle { font-size: 12.5px; }
+  .slide-eyebrow { font-size: 10.5px; }
 
-.storm-overlay::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #FFFFFF;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.12s ease-out;
-}
-.storm-overlay.flash::before { opacity: 0.75; transition: opacity 0.03s ease-in; }
+  .icon-badge { width: 40px; height: 40px; font-size: 18px; }
+  .icon-badge.lg { width: 56px; height: 56px; font-size: 28px; }
 
-.rain-layer { position: absolute; inset: 0; overflow: hidden; }
-.raindrop {
-  position: absolute;
-  top: -10vh;
-  width: 2px;
-  background: linear-gradient(to bottom, rgba(191, 233, 228, 0), rgba(191, 233, 228, 0.8));
-  animation-name: rainFall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-@keyframes rainFall {
-  from { transform: translateY(0); opacity: 0; }
-  8% { opacity: 1; }
-  to { transform: translateY(120vh); opacity: 0.4; }
-}
+  .slide-cover .icon-badge { width: 60px; height: 60px; font-size: 30px; }
+  .slide-cover h1 { font-size: 22px; }
+  .slide-cover .subtitle { font-size: 13px; }
 
-.storm-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  gap: 10px;
-  padding: 24px;
-}
-.storm-content .storm-icon { font-size: 56px; animation: sway 2.4s ease-in-out infinite; }
-@keyframes sway {
-  0%, 100% { transform: rotate(-6deg); }
-  50% { transform: rotate(6deg); }
-}
-.storm-content h3 { font-family: 'Lora', serif; font-size: 24px; margin: 0; }
-.storm-content p { font-size: 13.5px; color: #BFE9E4; max-width: 440px; margin: 0; }
+  .news-header { gap: 10px; }
+  .news-quote { font-size: 14.5px; }
+  .news-body { font-size: 12.5px; }
+  .news-bottom { gap: 10px 18px; }
+  .stat-callout { font-size: 28px; }
 
-.storm-close {
-  position: absolute;
-  top: 18px; right: 18px;
-  z-index: 3;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  color: white;
-  border-radius: 999px;
-  padding: 9px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
+  .card-row, .formula-cols, .refs-grid { gap: 10px; }
+  .mini-card, .formula-col, .ref-item { padding: 12px; }
+
+  .formula-hero { padding: 16px; }
+  .formula-hero .formula-text { font-size: 21px; }
+
+  .flow-row { flex-direction: column; }
+  .flow-step { width: 100%; }
+  .flow-arrow { transform: rotate(90deg); }
+
+  .metric-list { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+
+  .lit-panel { gap: 16px; }
+  .lit-stat .num { font-size: 40px; }
+
+  .timeline { flex-direction: column; gap: 8px; }
+
+  .cta-panel { flex-direction: column; align-items: stretch; text-align: center; padding: 16px; }
+  .cta-panel .cta-text p { max-width: none; }
+  .cta-button { text-align: center; }
+
+  .deck-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .deck-controls-group { justify-content: space-between; }
+  .deck-dots { order: 3; justify-content: center; max-width: 100%; }
+  .deck-toggle-btn { width: 100%; }
 }
-.storm-close:hover { background: rgba(255, 255, 255, 0.22); }
