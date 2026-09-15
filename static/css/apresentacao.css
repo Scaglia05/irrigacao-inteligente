@@ -122,8 +122,7 @@
   z-index: 0;
   overflow: hidden;
 }
-.slide-seco::before, .slide-seco::after,
-.slide-chuva::before, .slide-chuva::after {
+.slide-seco::before, .slide-seco::after, .slide-chuva::after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -173,18 +172,9 @@
   margin: 0;
 }
 
-/* --- Chuva: tempestade com raios e chuva animada --- */
+/* --- Chuva: tempestade com gotas caindo de verdade + raio --- */
 .slide-chuva {
   background: linear-gradient(165deg, #13242e 0%, #1c3745 45%, #0d1a20 100%);
-}
-.slide-chuva::before {
-  inset: -20% -10%;
-  background-image: repeating-linear-gradient(115deg, transparent 0 6px, rgba(191, 233, 228, 0.16) 7px, transparent 9px);
-  animation: rainStreak 0.4s linear infinite;
-}
-@keyframes rainStreak {
-  from { transform: translateY(-60px); }
-  to { transform: translateY(0); }
 }
 .slide-chuva::after {
   inset: 0;
@@ -194,11 +184,53 @@
 }
 @keyframes lightningFlash {
   0%, 92%, 100% { opacity: 0; }
-  93% { opacity: 0.5; }
-  94% { opacity: 0.05; }
-  95.5% { opacity: 0.3; }
+  93% { opacity: 0.75; }
+  94% { opacity: 0.08; }
+  95.5% { opacity: 0.45; }
   97% { opacity: 0; }
 }
+
+.rain-drops {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.rain-drops .drop {
+  position: absolute;
+  top: -12%;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(191, 233, 228, 0), rgba(191, 233, 228, 0.9));
+  animation-name: dropFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes dropFall {
+  from { top: -12%; opacity: 0; }
+  8% { opacity: 1; }
+  to { top: 112%; opacity: 0.55; }
+}
+
+.storm-bolt {
+  position: absolute;
+  top: 14%;
+  right: 12%;
+  z-index: -1;
+  font-size: 64px;
+  opacity: 0;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8));
+  animation: boltFlash 8s infinite;
+  pointer-events: none;
+}
+@keyframes boltFlash {
+  0%, 92%, 100% { opacity: 0; transform: scale(0.9); }
+  93% { opacity: 1; transform: scale(1.05); }
+  94% { opacity: 0.15; transform: scale(0.95); }
+  95.5% { opacity: 0.9; transform: scale(1); }
+  97% { opacity: 0; transform: scale(0.9); }
+}
+
 .slide-chuva .slide-eyebrow {
   display: inline-block;
   background: rgba(255, 255, 255, 0.85);
@@ -487,4 +519,6 @@
   .deck-controls-group { justify-content: space-between; }
   .deck-dots { order: 3; justify-content: center; max-width: 100%; }
   .deck-toggle-btn { width: 100%; }
+
+  .storm-bolt { font-size: 40px; }
 }

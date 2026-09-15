@@ -62,4 +62,19 @@
   });
 
   render();
+
+  // ================= CHUVA NOS SLIDES DE TEMPESTADE =================
+  document.querySelectorAll(".slide-chuva .rain-drops").forEach((container) => {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 45; i++) {
+      const drop = document.createElement("span");
+      drop.className = "drop";
+      drop.style.left = `${Math.random() * 100}%`;
+      drop.style.height = `${30 + Math.random() * 50}px`;
+      drop.style.animationDuration = `${0.5 + Math.random() * 0.7}s`;
+      drop.style.animationDelay = `${Math.random() * 2}s`;
+      frag.appendChild(drop);
+    }
+    container.appendChild(frag);
+  });
 })();
