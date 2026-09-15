@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apresentação — Sistema de Irrigação Inteligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/apresentacao.css') }}">
+</head>
+<body>
+
+  <div class="dev-banner">
+    <div class="dev-banner-track">
+      <span>🚧 Protótipo em desenvolvimento — versão 1.2</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+      <span>🚧 Protótipo em desenvolvimento — versão 1.2</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+    </div>
+    <button class="dev-banner-info" id="devBannerInfo" title="Mais informações">ℹ️</button>
+  </div>
+  <div class="dev-popover" id="devPopover">
+    <span class="version-tag">Protótipo v1.2</span>
+    <h4>Em desenvolvimento contínuo</h4>
+    <p>Esta é a versão web (Flask/Python) da apresentação de TCC, com os mesmos slides usados na
+       banca, em formato interativo. O backend final do sistema roda em C#/.NET. Veja também o
+       <a href="{{ url_for('index') }}">painel de simulação</a>.</p>
+  </div>
+
+  <div class="spine"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🎤</span>
+      <div>
+        <h1>Apresentação do TCC<span class="version-badge">v1.2</span></h1>
+        <p>Sistema de Irrigação Inteligente — slides interativos</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="topbar-nav">
+        <a href="{{ url_for('index') }}">🖥️ Painel</a>
+        <a href="{{ url_for('apresentacao') }}" class="active">🎤 Apresentação</a>
+      </nav>
+      <div class="brand-meta">
+        <span>Guilherme Augusto Scaglia</span>
+        <span class="muted">Eng. Computação · FHO</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="deck-page">
+    <div class="deck-intro">
+      <h2>🌱 Sistema de Irrigação Inteligente</h2>
+      <p>Use as setas do teclado, arraste no celular ou clique nos botões abaixo para navegar. Clique em qualquer ícone de 🌧️ para ativar o modo tempestade.</p>
+    </div>
+
+    <div class="deck-wrap" id="deckWrap">
+      <div class="deck-progress-track"><div class="deck-progress-bar" id="deckProgress"></div></div>
+
+      <div class="deck" id="deck">
+
+        <!-- SLIDE 1 — Título -->
+        <section class="slide slide-cover active">
+          <div class="icon-badge dark">💧</div>
+          <h1>Sistema de Irrigação Inteligente</h1>
+          <p class="subtitle">Sensoriamento, Evapotranspiração e Previsão Climática para Otimização do Consumo de Água 🌱🌾</p>
+          <div class="author-block">
+            <strong>Guilherme Augusto Scaglia</strong>
+            <span class="muted">Engenharia de Computação — Fundação Hermínio Ometto (FHO)</span>
+            <span class="muted">Orientador: Prof. Pedro Luís Antonelli</span>
+          </div>
+          <div class="notes-panel" hidden>(~30s) Bom dia/tarde. Meu nome é Guilherme e vou apresentar meu projeto de TCC: um sistema de irrigação inteligente. Orientação do Prof. Pedro Luís Antonelli.</div>
+        </section>
+
+        <!-- SLIDE 2 — Notícia: Falta de Água -->
+        <section class="slide">
+          <span class="slide-eyebrow">Notícia · Slide 2 de 15</span>
+          <div class="news-header">
+            <div class="icon-badge">🌽</div>
+            <div>
+              <h2 class="slide-title-main" style="font-size:24px;">Notícia: Falta de Água</h2>
+              <span class="news-source">Portal Mais Agro / Syngenta — maio de 2026</span>
+            </div>
+          </div>
+          <p class="news-quote">"Milho Safrinha em alerta: seca acumula perdas de até 60% no Sul e Centro-Oeste"</p>
+          <p class="news-body">Em Francisco Beltrão (PR), a chuva faltou exatamente entre o florescimento e o enchimento de grãos do milho — a fase de maior consumo de água da planta. Produtores acumularam perdas de produtividade próximas a 60%.</p>
+          <div class="news-bottom">
+            <span class="stat-callout">-60%<br></span>
+            <span class="news-footnote">de produtividade<br>Fonte: Portal Mais Agro / Syngenta, com dados do INMET, maio de 2026.</span>
+          </div>
+          <div class="notes-panel" hidden>(~30s) Primeira notícia: na safra de milho de 2026, no Paraná e Mato Grosso do Sul, a chuva faltou exatamente na fase em que a planta mais precisa de água — o florescimento. Resultado: perdas de até 60% da produtividade.</div>
+        </section>
+
+        <!-- SLIDE 3 — Notícia: Excesso de Água (gatilho de chuva) -->
+        <section class="slide">
+          <span class="slide-eyebrow">Notícia · Slide 3 de 15</span>
+          <div class="news-header rain-trigger" title="Clique para simular a tempestade ⛈️">
+            <div class="icon-badge">⛈️</div>
+            <div>
+              <h2 class="slide-title-main" style="font-size:24px;">Notícia: Excesso de Água</h2>
+              <span class="news-source">FOCAS / Uniso — maio de 2026</span>
+            </div>
+          </div>
+          <p class="news-quote">"O impacto da incerteza climática nas produções de arroz no Rio Grande do Sul em 2026"</p>
+          <p class="news-body">Chuvas de 120 a 150 milímetros em 24 horas alagaram lavouras de arroz no RS: "as áreas alagam e a água demora muito para baixar". O solo encharcado compromete a oxigenação das raízes e atrasa a colheita.</p>
+          <div class="news-bottom rain-trigger">
+            <span class="stat-callout info">120–150mm</span>
+            <span class="news-footnote">de chuva em 24h<br>Fonte: FOCAS/Uniso, 2026.
+              <span class="rain-hint">🌧️ clique para ver a tempestade</span>
+            </span>
+          </div>
+          <div class="notes-panel" hidden>(~30s) Segunda notícia, e o lado oposto do problema: no Rio Grande do Sul, chuvas de até 150 milímetros em 24 horas alagaram lavouras de arroz. Excesso de água também compromete a produção — encharca a raiz e atrasa a colheita.</div>
+        </section>
+
+        <!-- SLIDE 4 — Notícia: Dependência da Chuva (gatilho de chuva) -->
+        <section class="slide">
+          <span class="slide-eyebrow">Notícia · Slide 4 de 15</span>
+          <div class="news-header rain-trigger" title="Clique para simular a tempestade ⛈️">
+            <div class="icon-badge">☁️</div>
+            <div>
+              <h2 class="slide-title-main" style="font-size:24px;">Notícia: Dependência da Chuva</h2>
+              <span class="news-source">Diário do Acre — agosto de 2026</span>
+            </div>
+          </div>
+          <p class="news-quote">"Irrigação ganha espaço no agro brasileiro diante de chuvas mais irregulares"</p>
+          <p class="news-body">Cerca de 95% das áreas agrícolas do Brasil ainda dependem diretamente da chuva; apenas 5% contam com irrigação. Com temperaturas mais altas e chuvas mais irregulares, garantir água nos momentos certos pesa cada vez mais na produção.</p>
+          <div class="news-bottom">
+            <span class="stat-callout">95%</span>
+            <span class="news-footnote">da agricultura brasileira depende só da chuva<br>Fonte: Diário do Acre, com dados do Atlas Irrigação (ANA/MIDR), agosto de 2026.</span>
+          </div>
+          <div class="notes-panel" hidden>(~30s) E a terceira notícia mostra o tamanho da lacuna: 95% da agricultura brasileira ainda depende só da chuva, sem nenhum tipo de irrigação. Isso mostra o quanto decisões automatizadas e baseadas em dados ainda têm espaço para crescer no país.</div>
+        </section>
+
+        <!-- SLIDE 5 — Por Que Isso Acontece? -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 5 de 15</span>
+          <h2 class="slide-title-main">Por Que Isso Acontece?</h2>
+          <p class="slide-subtitle">Os métodos mais usados hoje decidem "no escuro":</p>
+          <div class="card-row">
+            <div class="mini-card">
+              <div class="icon-badge">⏰</div>
+              <h3>Tempo fixo</h3>
+              <p>Liga a irrigação sempre no mesmo horário — pode molhar demais ou de menos, chova ou faça sol.</p>
+            </div>
+            <div class="mini-card rain-trigger" title="Clique para ver a chuva sendo ignorada 🌧️">
+              <div class="icon-badge">🌧️🚫</div>
+              <h3>Limiar simples de umidade</h3>
+              <p>Reage à umidade do solo, mas ignora a previsão do tempo.</p>
+            </div>
+            <div class="mini-card">
+              <div class="icon-badge">❓</div>
+              <h3>Nenhum considera a planta</h3>
+              <p>Nenhum dos dois calcula a real necessidade hídrica da cultura.</p>
+            </div>
+          </div>
+          <div class="slide-footline">💧 Resultado: desperdício de água ou plantas sob estresse hídrico.</div>
+          <div class="notes-panel" hidden>(~30s) Por que isso acontece? Os dois métodos mais usados hoje decidem sem informação: um ignora o clima, o outro ignora a real necessidade da planta. Nenhum calcula isso de verdade.</div>
+        </section>
+
+        <!-- SLIDE 6 — Nossa Ideia -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 6 de 15</span>
+          <h2 class="slide-title-main">Nossa Ideia 🎯</h2>
+          <p class="slide-subtitle">Um sistema que decide sozinho quando e quanto irrigar — combinando três informações que hoje ninguém junta.</p>
+          <div class="card-row">
+            <div class="mini-card destaque">
+              <div class="icon-badge">💧</div>
+              <h3>Umidade do solo</h3>
+              <p>medida em tempo real por sensores</p>
+            </div>
+            <div class="mini-card destaque">
+              <div class="icon-badge">🧪</div>
+              <h3>Evapotranspiração (ETc)</h3>
+              <p>cálculo científico da necessidade hídrica da cultura (FAO-56)</p>
+            </div>
+            <div class="mini-card destaque rain-trigger" title="Clique para ver a previsão em ação 🌧️">
+              <div class="icon-badge">☁️</div>
+              <h3>Previsão climática</h3>
+              <p>consultada via API antes de decidir irrigar</p>
+            </div>
+          </div>
+          <div class="notes-panel" hidden>(~35s) Minha proposta: um sistema que junta três coisas que hoje ninguém junta em um sistema de baixo custo: umidade do solo em tempo real, o cálculo científico da real necessidade de água da planta (evapotranspiração, método da FAO), e a previsão do tempo.</div>
+        </section>
+
+        <!-- SLIDE 7 — O Cálculo Que Vamos Usar -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 7 de 15</span>
+          <h2 class="slide-title-main">O Cálculo Que Vamos Usar 🧮</h2>
+          <p class="slide-subtitle">Nada de achismo: a necessidade de água da planta é calculada, não estimada no olho.</p>
+          <div class="formula-hero">
+            <div class="formula-text">ETc = ETo × Kc</div>
+            <div class="formula-sub">necessidade real de água da cultura, em mm/dia</div>
+          </div>
+          <div class="formula-cols">
+            <div class="formula-col">
+              <span class="letter">ETo</span>
+              <h4>Evapotranspiração de referência</h4>
+              <p>calculada pelo método Penman-Monteith, padrão internacional definido pela FAO (boletim FAO-56).</p>
+            </div>
+            <div class="formula-col">
+              <span class="letter">Kc</span>
+              <h4>Coeficiente de cultura</h4>
+              <p>específico do rabanete 🥬: 0,70 (inicial) → 0,90 (médio) → 0,85 (final), conforme a fase de desenvolvimento.</p>
+            </div>
+            <div class="formula-col">
+              <span class="letter">ETc</span>
+              <h4>Evapotranspiração da cultura</h4>
+              <p>o resultado final: quanto de água a planta realmente precisa naquele dia — é o que decide se o sistema irriga.</p>
+            </div>
+          </div>
+          <span class="news-footnote">Fonte do método: ALLEN, R. G. et al. FAO Irrigation and Drainage Paper 56, 1998; ZOTARELLI, L. et al., 2010.</span>
+          <div class="notes-panel" hidden>(~35s) O cálculo por trás da decisão é esse: ETc igual ETo vezes Kc. ETo é a evapotranspiração de referência, calculada pelo método Penman-Monteith, padrão da FAO. Kc é o coeficiente específico do rabanete, que muda conforme a fase da planta. O resultado, ETc, é quanto de água a planta realmente precisa naquele dia — e é isso que decide se o sistema vai irrigar ou não.</div>
+        </section>
+
+        <!-- SLIDE 8 — Como Funciona -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 8 de 15</span>
+          <h2 class="slide-title-main">Como Funciona ⚙️</h2>
+          <div class="flow-row">
+            <div class="flow-step">
+              <div class="icon-badge">📟</div>
+              <h4>ESP32 + Sensores</h4>
+              <p>lê umidade do solo e do ambiente</p>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step rain-trigger" title="Clique para ver a chuva chegando 🌧️">
+              <div class="icon-badge">☁️</div>
+              <h4>API de Clima</h4>
+              <p>consulta previsão de chuva</p>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">
+              <div class="icon-badge">🖥️</div>
+              <h4>Backend C#/.NET</h4>
+              <p>calcula ETc e decide irrigar</p>
+            </div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-step">
+              <div class="icon-badge">🚿</div>
+              <h4>Bomba / Válvula</h4>
+              <p>aciona a irrigação</p>
+            </div>
+          </div>
+          <div class="slide-footline">🌧️ Se chover em breve, o sistema cancela a irrigação automaticamente.</div>
+          <div class="notes-panel" hidden>(~45s) Na prática: o ESP32 lê os sensores, meu backend em C#/.NET consulta a previsão do tempo e calcula a necessidade hídrica da planta, decide se irriga, e aciona a bomba. Se vai chover, ele cancela a irrigação sozinho.</div>
+        </section>
+
+        <!-- SLIDE 9 — Protótipo de Painel Web -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 9 de 15</span>
+          <h2 class="slide-title-main">Nosso Protótipo de Painel Web 🖥️🌱</h2>
+          <p class="slide-subtitle">Diferente do mockup original da banca, este painel já está funcionando de verdade — com dados reais de clima.</p>
+          <div class="cta-panel">
+            <div class="cta-text">
+              <h4>irrigacao-inteligente.local/painel</h4>
+              <p>Umidade do solo, previsão de chuva em tempo real (Open-Meteo), status da irrigação e comparação entre os 3 grupos — tudo calculado ao vivo, não ilustrativo.</p>
+            </div>
+            <a class="cta-button" href="{{ url_for('index') }}">🚿 Abrir protótipo interativo</a>
+          </div>
+          <div class="notes-panel" hidden>(~30s) Este é o mockup do painel web que o backend vai expor: umidade do solo em tempo real, previsão de chuva, status da irrigação, e comparação entre os grupos. Os números aqui são ilustrativos — ainda vamos gerar os dados reais durante o experimento.</div>
+        </section>
+
+        <!-- SLIDE 10 — Como Vamos Validar -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 10 de 15</span>
+          <h2 class="slide-title-main">Como Vamos Validar ⚖️</h2>
+          <p class="slide-subtitle">Três grupos comparados lado a lado, por 25 a 35 dias:</p>
+          <div class="card-row">
+            <div class="mini-card">
+              <h3>Controle A</h3>
+              <p>Irrigação por tempo fixo (método tradicional)</p>
+            </div>
+            <div class="mini-card">
+              <h3>Controle B</h3>
+              <p>Limiar simples de umidade, sem dados de clima</p>
+            </div>
+            <div class="mini-card destaque">
+              <h3>Grupo Experimental</h3>
+              <p>Nosso sistema completo: solo + clima + ETc</p>
+            </div>
+          </div>
+          <div class="slide-footline">🥬🌱 Cultura escolhida: rabanete (Raphanus sativus). Ciclo de 25 a 35 dias — cabe no prazo do experimento — e é sensível o suficiente ao déficit hídrico para mostrar diferença entre os grupos.</div>
+          <div class="notes-panel" hidden>(~40s) Para validar isso, vou rodar três grupos em paralelo por 25 a 35 dias: um com tempo fixo, um com limiar simples de umidade, e o meu grupo experimental com o sistema completo. A cultura escolhida é o rabanete, porque o ciclo dele cabe exatamente no prazo do experimento e ele é bem sensível à água, o que ajuda a enxergar diferença entre os grupos.</div>
+        </section>
+
+        <!-- SLIDE 11 — O Que Vamos Medir -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 11 de 15</span>
+          <h2 class="slide-title-main">O Que Vamos Medir 📊</h2>
+          <div class="metric-list">
+            <div class="metric-item">
+              <div class="icon-badge">💧</div>
+              <h4>Volume de água</h4>
+              <p>consumido por cada grupo (L)</p>
+            </div>
+            <div class="metric-item">
+              <div class="icon-badge">🌡️</div>
+              <h4>Umidade do solo</h4>
+              <p>registrada a cada 15 min</p>
+            </div>
+            <div class="metric-item">
+              <div class="icon-badge">🥬</div>
+              <h4>Saúde da planta</h4>
+              <p>altura, folhas e biomassa</p>
+            </div>
+            <div class="metric-item rain-trigger" title="Clique para ver o clima 🌧️">
+              <div class="icon-badge">☁️</div>
+              <h4>Precisão do clima</h4>
+              <p>previsão × chuva real</p>
+            </div>
+            <div class="metric-item">
+              <div class="icon-badge">⚙️</div>
+              <h4>Decisões evitadas</h4>
+              <p>irrigações canceladas por chuva prevista</p>
+            </div>
+          </div>
+          <div class="notes-panel" hidden>(~35s) As métricas que vou coletar: volume de água consumido por grupo, umidade do solo ao longo do tempo, saúde da planta no final, precisão da previsão do tempo, e quantas irrigações foram evitadas por causa da chuva prevista.</div>
+        </section>
+
+        <!-- SLIDE 12 — O Que a Literatura Aponta -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 12 de 15</span>
+          <h2 class="slide-title-main">O Que a Literatura Aponta 📚</h2>
+          <p class="slide-subtitle">Esse é o tipo de resultado relatado por sistemas semelhantes ao nosso.</p>
+          <div class="lit-panel">
+            <div class="lit-stat">
+              <span class="up">até</span>
+              <div class="num">23%</div>
+            </div>
+            <div class="lit-text">
+              de redução no consumo de água ao incorporar previsão climática na decisão de irrigar.
+              <div class="lit-cite">Froiz-Míguez et al., 2020 — Sensors (estudo internacional)</div>
+            </div>
+          </div>
+          <div class="slide-footline">O experimento deste projeto ainda será executado — vamos comparar nossos três grupos e medir, com dados próprios, se o sistema proposto alcança uma economia de água na mesma direção.</div>
+          <div class="notes-panel" hidden>(~35s) Sistemas parecidos com o meu já relataram, na literatura, redução de até 23% no consumo de água só por incorporar previsão climática na decisão. Esse experimento ainda vai ser executado — a ideia é comparar meus três grupos e ver se chego a um resultado na mesma direção, com dados próprios.</div>
+        </section>
+
+        <!-- SLIDE 13 — Cronograma -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 13 de 15</span>
+          <h2 class="slide-title-main">Cronograma 🗓️</h2>
+          <div class="timeline">
+            <div class="timeline-step">
+              <div class="icon-badge">📖</div>
+              <h4>Levantamento + CEP</h4>
+              <span class="period">Set–Dez/26</span>
+            </div>
+            <div class="timeline-step">
+              <div class="icon-badge">📟</div>
+              <h4>Hardware + Backend</h4>
+              <span class="period">Dez/26–Mar/27</span>
+            </div>
+            <div class="timeline-step">
+              <div class="icon-badge">🧪</div>
+              <h4>Coleta de dados</h4>
+              <span class="period">Fev–Abr/27</span>
+            </div>
+            <div class="timeline-step">
+              <div class="icon-badge">📊</div>
+              <h4>Análise + Redação</h4>
+              <span class="period">Mai–Nov/27</span>
+            </div>
+            <div class="timeline-step">
+              <div class="icon-badge">🎯</div>
+              <h4>Defesa do TCC</h4>
+              <span class="period">Dez/27</span>
+            </div>
+          </div>
+          <div class="timeline-note">Defesa prevista para dezembro de 2027</div>
+          <div class="notes-panel" hidden>(~25s) O cronograma vai de setembro deste ano até dezembro de 2027: levantamento e submissão ao CEP agora, depois montagem do hardware e do backend, coleta de dados no início de 2027, análise e redação, e defesa prevista para dezembro de 2027.</div>
+        </section>
+
+        <!-- SLIDE 14 — Referências -->
+        <section class="slide">
+          <span class="slide-eyebrow">Slide 14 de 15</span>
+          <h2 class="slide-title-main">Referências 🔗</h2>
+          <div class="refs-grid">
+            <div class="ref-item">
+              <span class="ref-label">ANA — Conjuntura dos Recursos Hídricos do Brasil, 2025 (irrigação = 50,3% da água retirada)</span>
+              <a href="https://www.cnnbrasil.com.br/nacional/brasil/irrigacao-corresponde-a-50-do-uso-da-agua-no-brasil-diz-relatorio-da-ana/" target="_blank" rel="noopener">cnnbrasil.com.br</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">ANA — Conjuntura dos Recursos Hídricos do Brasil, 2023 (7 milhões atingidos por secas)</span>
+              <a href="https://www.gov.br/ana/pt-br/assuntos/noticias-e-eventos/noticias/relatorio-conjuntura-dos-recursos-hidricos-no-brasil-atualiza-informacoes-sobre-aguas-do-pais" target="_blank" rel="noopener">gov.br/ana</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">Especialista B. Bacci — Agrishow Digital, 2019 (desperdício de 50–60% na irrigação)</span>
+              <a href="https://digital.agrishow.com.br/artigos/voc-conhece-principais-causas-do-desperdcio-na-irrigao/" target="_blank" rel="noopener">digital.agrishow.com.br</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">Portal Mais Agro / Syngenta, 2026 — caso do milho safrinha (PR/MS, -60%)</span>
+              <a href="https://maisagro.syngenta.com.br/dia-a-dia-do-campo/milho-safrinha-em-alerta-seca-acumula-perdas-de-ate-60-no-sul-e-centro-oeste/" target="_blank" rel="noopener">maisagro.syngenta.com.br</a>
+            </div>
+            <div class="ref-item rain-trigger" title="Clique para ver a chuva 🌧️">
+              <span class="ref-label">FOCAS/Uniso, 2026 — caso do arroz no RS (excesso de chuva, alagamento)</span>
+              <a href="https://focas.uniso.br/index.php/2026/05/27/o-impacto-da-incerteza-climatica-nas-producoes-de-arroz-no-rio-grande-do-sul-em-2026/" target="_blank" rel="noopener">focas.uniso.br</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">Diário do Acre, 2026 — 95% da agricultura brasileira depende só de chuva</span>
+              <a href="https://diariodoacre.com.br/irrigacao-ganha-espaco-no-agro-brasileiro-diante-de-chuvas-mais-irregulares-e-maior-pressao-sobre-a-producao/" target="_blank" rel="noopener">diariodoacre.com.br</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">ALLEN, R. G. et al. Crop evapotranspiration (FAO-56). FAO, 1998 — método do cálculo ETc</span>
+              <a href="https://www.fao.org/4/x0490e/x0490e00.htm" target="_blank" rel="noopener">fao.org</a>
+            </div>
+            <div class="ref-item">
+              <span class="ref-label">FROIZ-MÍGUEZ, I. et al. IoT smart irrigation system... Sensors, 2020 (-23% de consumo)</span>
+              <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7730861/" target="_blank" rel="noopener">ncbi.nlm.nih.gov</a>
+            </div>
+          </div>
+          <div class="notes-panel" hidden>(~15s) Aqui estão todas as fontes usadas, com os links, para quem quiser conferir os dados originais.</div>
+        </section>
+
+        <!-- SLIDE 15 — Obrigado -->
+        <section class="slide slide-cover">
+          <div class="icon-badge dark">🤝</div>
+          <h1>Obrigado! 🌱</h1>
+          <p class="subtitle">Perguntas?</p>
+          <div class="author-block">
+            <strong>Guilherme Augusto Scaglia</strong>
+            <span class="muted">Orientador: Prof. Pedro Luís Antonelli</span>
+          </div>
+          <div class="notes-panel" hidden>(~15s) Obrigado pela atenção! Fico à disposição para perguntas.</div>
+        </section>
+
+      </div>
+
+      <div class="deck-controls">
+        <div class="deck-controls-group">
+          <button class="deck-nav-btn" id="btnPrevSlide" type="button">← Anterior</button>
+          <span class="deck-counter" id="slideCounter">1 / 15</span>
+          <button class="deck-nav-btn" id="btnNextSlide" type="button">Próximo →</button>
+        </div>
+        <div class="deck-dots" id="slideDots"></div>
+        <button class="deck-toggle-btn" id="btnToggleNotes" type="button">📝 Notas do apresentador</button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Apresentação interativa gerada a partir dos slides originais do TCC — Engenharia de Computação, FHO.
+       Autor: Guilherme Augusto Scaglia · Orientador: Prof. Pedro Luís Antonelli.</p>
+  </footer>
+
+  <!-- Botão flutuante + camada de tempestade -->
+  <button class="storm-fab" id="btnStorm" type="button">🌧️ Modo tempestade</button>
+  <div class="storm-overlay" id="stormOverlay" hidden>
+    <div class="rain-layer" id="rainLayer"></div>
+    <button class="storm-close" id="btnStormClose" type="button">✕ Fechar tempestade</button>
+    <div class="storm-content">
+      <div class="storm-icon">⛈️</div>
+      <h3>Modo tempestade ativado</h3>
+      <p>É exatamente nesse cenário que o grupo Experimental cancela a irrigação automaticamente — o sistema já sabe que vai chover.</p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/banner.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/apresentacao.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema de Irrigação Inteligente — Painel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <div class="dev-banner">
+    <div class="dev-banner-track">
+      <span>🚧 Protótipo em desenvolvimento — versão 1.2</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+      <span>🚧 Protótipo em desenvolvimento — versão 1.2</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+    </div>
+    <button class="dev-banner-info" id="devBannerInfo" title="Mais informações">ℹ️</button>
+  </div>
+  <div class="dev-popover" id="devPopover">
+    <span class="version-tag">Protótipo v1.2</span>
+    <h4>Em desenvolvimento contínuo</h4>
+    <p>Este painel web (Flask/Python) demonstra a lógica de decisão do sistema — evapotranspiração,
+       previsão climática e comparação entre grupos. O backend final do TCC roda em C#/.NET; o
+       cálculo matemático é idêntico. Veja também a <a href="{{ url_for('apresentacao') }}">apresentação interativa</a>.</p>
+  </div>
+
+  <div class="spine"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">💧</span>
+      <div>
+        <h1>Sistema de Irrigação Inteligente<span class="version-badge">v1.2</span></h1>
+        <p>Painel de acompanhamento — protótipo de TCC</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="topbar-nav">
+        <a href="{{ url_for('index') }}" class="active">🖥️ Painel</a>
+        <a href="{{ url_for('apresentacao') }}">🎤 Apresentação</a>
+      </nav>
+      <div class="brand-meta">
+        <span>Guilherme Augusto Scaglia</span>
+        <span class="muted">Eng. Computação · FHO</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <!-- ============ MOCKUP DO PAINEL (estilo navegador) ============ -->
+    <section class="browser-mock">
+      <div class="browser-chrome">
+        <span class="dot dot-red"></span>
+        <span class="dot dot-amber"></span>
+        <span class="dot dot-green"></span>
+        <div class="browser-url">irrigacao-inteligente.local/painel</div>
+      </div>
+      <div class="browser-body">
+        <div class="mock-stats">
+          <div class="mock-stat">
+            <span class="mock-stat-label">Umidade do solo</span>
+            <span class="mock-stat-value" id="mockUmidade">40%</span>
+          </div>
+          <div class="mock-stat">
+            <span class="mock-stat-label">Próxima chuva</span>
+            <span class="mock-stat-value" id="mockChuva">—</span>
+          </div>
+          <div class="mock-stat">
+            <span class="mock-stat-label">Status da irrigação</span>
+            <span class="mock-stat-value" id="mockStatus">Aguardando</span>
+          </div>
+        </div>
+        <div class="mock-charts">
+          <div class="mock-chart-card">
+            <span class="mock-chart-title">Umidade do solo ao longo do tempo (simulação)</span>
+            <canvas id="chartUmidade" height="160"></canvas>
+          </div>
+          <div class="mock-chart-card">
+            <span class="mock-chart-title">Consumo por grupo (clique em "Comparar")</span>
+            <canvas id="chartConsumo" height="160"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PAINEL DE CONTROLE ============ -->
+    <section class="panel controls">
+      <h2>Configuração</h2>
+
+      <label class="field">
+        <span>Localização</span>
+        <div class="input-row">
+          <input id="cidade" type="text" value="Araras, SP" placeholder="Digite a cidade..." />
+          <button id="btnBuscarLocal" class="btn-ghost" title="Buscar cidade">🔍</button>
+        </div>
+        <small id="localInfo" class="muted">—</small>
+      </label>
+
+      <label class="field">
+        <span>Aspersor / Grupo experimental</span>
+        <select id="grupo">
+          <option value="controle_a">Aspersor 1 — Controle A (tempo fixo)</option>
+          <option value="controle_b">Aspersor 2 — Controle B (limiar de umidade)</option>
+          <option value="experimental" selected>Aspersor 3 — Experimental (sistema completo)</option>
+        </select>
+        <small class="muted" id="grupoDesc">Combina umidade do solo, cálculo de ETc (Penman-Monteith / FAO-56) e previsão climática.</small>
+      </label>
+
+      <div id="camposUmidade" class="field">
+        <span>Umidade do solo atual</span>
+        <div class="slider-row">
+          <input id="umidadeSolo" type="range" min="0" max="100" value="40" />
+          <span id="umidadeSoloValor" class="slider-value">40%</span>
+        </div>
+        <small class="muted">Simula a leitura do sensor capacitivo (ESP32). Ajuste manualmente para testar cenários.</small>
+      </div>
+
+      <div id="camposEtc" class="field-group">
+        <label class="field">
+          <span>Fase da cultura (rabanete)</span>
+          <select id="faseCultura">
+            <option value="inicial">Inicial (Kc = 0,70)</option>
+            <option value="medio" selected>Médio (Kc = 0,90)</option>
+            <option value="final">Final (Kc = 0,85)</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="field-row">
+        <label class="field">
+          <span>Área irrigada (m²)</span>
+          <input id="areaM2" type="number" step="0.01" min="0.01" value="0.25" />
+        </label>
+        <label class="field">
+          <span>Vazão do aspersor (L/h)</span>
+          <input id="vazaoLH" type="number" step="1" min="1" value="120" />
+        </label>
+      </div>
+
+      <div id="campoDuracaoFixa" class="field">
+        <span>Duração fixa por acionamento (min)</span>
+        <input id="duracaoFixa" type="number" step="1" min="1" value="15" />
+      </div>
+
+      <button id="btnCalcular" class="btn-primary">Calcular irrigação</button>
+      <button id="btnComparar" class="btn-secondary">Comparar os 3 grupos</button>
+
+      <div id="statusMsg" class="status-msg"></div>
+    </section>
+
+    <!-- ============ RESULTADO PRINCIPAL ============ -->
+    <section class="panel result" id="resultPanel">
+      <h2>Decisão do sistema</h2>
+      <div class="result-empty" id="resultEmpty">
+        <p>Configure os parâmetros ao lado e clique em <strong>Calcular irrigação</strong>.</p>
+      </div>
+      <div class="result-content" id="resultContent" style="display:none;">
+
+        <div class="decision-banner" id="decisionBanner">
+          <span class="decision-icon" id="decisionIcon">💧</span>
+          <div>
+            <div class="decision-title" id="decisionTitle">—</div>
+            <div class="decision-reason" id="decisionReason">—</div>
+          </div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-card">
+            <span class="metric-label">Volume de água</span>
+            <span class="metric-value" id="metricVolume">—</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Tempo ligado</span>
+            <span class="metric-value" id="metricDuracao">—</span>
+          </div>
+          <div class="metric-card" id="cardEto">
+            <span class="metric-label">ETo (referência)</span>
+            <span class="metric-value" id="metricEto">—</span>
+          </div>
+          <div class="metric-card" id="cardEtc">
+            <span class="metric-label">ETc (cultura)</span>
+            <span class="metric-value" id="metricEtc">—</span>
+          </div>
+        </div>
+
+        <div class="formula-strip" id="formulaStrip">
+          <span class="formula">ETc = ETo × Kc</span>
+          <span class="formula-detail" id="formulaDetail">—</span>
+        </div>
+
+        <div class="weather-strip" id="weatherStrip"></div>
+
+      </div>
+    </section>
+
+    <!-- ============ COMPARATIVO ============ -->
+    <section class="panel comparison" id="comparisonPanel" style="display:none;">
+      <h2>Comparativo entre os 3 grupos (hoje)</h2>
+      <div class="comparison-grid" id="comparisonGrid"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Protótipo desenvolvido para fins acadêmicos — TCC em Engenharia de Computação, FHO.
+       Cálculo de ETo pelo método Penman-Monteith (ALLEN et al., 1998, FAO-56).
+       Dados climáticos: Open-Meteo.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/banner.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
