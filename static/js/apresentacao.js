@@ -6,11 +6,9 @@
   const progressBar = document.getElementById("deckProgress");
   const btnPrev = document.getElementById("btnPrevSlide");
   const btnNext = document.getElementById("btnNextSlide");
-  const btnNotes = document.getElementById("btnToggleNotes");
   const deckEl = document.getElementById("deck");
 
   let current = 0;
-  let notesVisible = false;
 
   slides.forEach((_, i) => {
     const dot = document.createElement("button");
@@ -29,7 +27,6 @@
     progressBar.style.width = `${((current + 1) / total) * 100}%`;
     btnPrev.disabled = current === 0;
     btnNext.disabled = current === total - 1;
-    document.querySelectorAll(".notes-panel").forEach((n) => { n.hidden = !notesVisible; });
   }
 
   function goTo(i) {
@@ -39,11 +36,6 @@
 
   btnPrev.addEventListener("click", () => goTo(current - 1));
   btnNext.addEventListener("click", () => goTo(current + 1));
-  btnNotes.addEventListener("click", () => {
-    notesVisible = !notesVisible;
-    btnNotes.classList.toggle("active", notesVisible);
-    render();
-  });
 
   window.addEventListener("keydown", (e) => {
     if (["ArrowRight", "PageDown"].includes(e.key)) goTo(current + 1);

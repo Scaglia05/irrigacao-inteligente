@@ -75,12 +75,11 @@
             <span class="muted">Engenharia de Computação — Fundação Hermínio Ometto (FHO)</span>
             <span class="muted">Orientador: Prof. Pedro Luís Antonelli</span>
           </div>
-          <div class="notes-panel" hidden>(~30s) Bom dia/tarde. Meu nome é Guilherme e vou apresentar meu projeto de TCC: um sistema de irrigação inteligente. Orientação do Prof. Pedro Luís Antonelli.</div>
         </section>
 
         <!-- SLIDE 2 — Notícia: Falta de Água (cenário: seca) -->
         <section class="slide slide-seco">
-          <span class="slide-eyebrow">Notícia · Slide 2 de 15</span>
+          <span class="slide-eyebrow">Notícia · Slide 2 de 14</span>
           <div class="news-header">
             <div class="icon-badge">🌽</div>
             <div>
@@ -94,14 +93,13 @@
             <span class="stat-callout">-60%</span>
             <span class="news-footnote">de produtividade<br>Fonte: Portal Mais Agro / Syngenta, com dados do INMET, maio de 2026.</span>
           </div>
-          <div class="notes-panel" hidden>(~30s) Primeira notícia: na safra de milho de 2026, no Paraná e Mato Grosso do Sul, a chuva faltou exatamente na fase em que a planta mais precisa de água — o florescimento. Resultado: perdas de até 60% da produtividade.</div>
         </section>
 
         <!-- SLIDE 3 — Notícia: Excesso de Água (cenário: tempestade) -->
         <section class="slide slide-chuva">
           <div class="rain-drops" aria-hidden="true"></div>
           <span class="storm-bolt" aria-hidden="true">⚡</span>
-          <span class="slide-eyebrow">Notícia · Slide 3 de 15</span>
+          <span class="slide-eyebrow">Notícia · Slide 3 de 14</span>
           <div class="news-header">
             <div class="icon-badge">⛈️</div>
             <div>
@@ -115,14 +113,13 @@
             <span class="stat-callout info">120–150mm</span>
             <span class="news-footnote">de chuva em 24h<br>Fonte: FOCAS/Uniso, 2026.</span>
           </div>
-          <div class="notes-panel" hidden>(~30s) Segunda notícia, e o lado oposto do problema: no Rio Grande do Sul, chuvas de até 150 milímetros em 24 horas alagaram lavouras de arroz. Excesso de água também compromete a produção — encharca a raiz e atrasa a colheita.</div>
         </section>
 
         <!-- SLIDE 4 — Notícia: Dependência da Chuva (cenário: tempestade) -->
         <section class="slide slide-chuva">
           <div class="rain-drops" aria-hidden="true"></div>
           <span class="storm-bolt" aria-hidden="true">⚡</span>
-          <span class="slide-eyebrow">Notícia · Slide 4 de 15</span>
+          <span class="slide-eyebrow">Notícia · Slide 4 de 14</span>
           <div class="news-header">
             <div class="icon-badge">☁️</div>
             <div>
@@ -136,12 +133,11 @@
             <span class="stat-callout">95%</span>
             <span class="news-footnote">da agricultura brasileira depende só da chuva<br>Fonte: Diário do Acre, com dados do Atlas Irrigação (ANA/MIDR), agosto de 2026.</span>
           </div>
-          <div class="notes-panel" hidden>(~30s) E a terceira notícia mostra o tamanho da lacuna: 95% da agricultura brasileira ainda depende só da chuva, sem nenhum tipo de irrigação. Isso mostra o quanto decisões automatizadas e baseadas em dados ainda têm espaço para crescer no país.</div>
         </section>
 
         <!-- SLIDE 5 — Por Que Isso Acontece? -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 5 de 15</span>
+          <span class="slide-eyebrow">Slide 5 de 14</span>
           <h2 class="slide-title-main">Por Que Isso Acontece?</h2>
           <p class="slide-subtitle">Os métodos mais usados hoje decidem "no escuro":</p>
           <div class="card-row">
@@ -162,12 +158,11 @@
             </div>
           </div>
           <div class="slide-footline">💧 Resultado: desperdício de água ou plantas sob estresse hídrico.</div>
-          <div class="notes-panel" hidden>(~30s) Por que isso acontece? Os dois métodos mais usados hoje decidem sem informação: um ignora o clima, o outro ignora a real necessidade da planta. Nenhum calcula isso de verdade.</div>
         </section>
 
         <!-- SLIDE 6 — Nossa Ideia -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 6 de 15</span>
+          <span class="slide-eyebrow">Slide 6 de 14</span>
           <h2 class="slide-title-main">Nossa Ideia 🎯</h2>
           <p class="slide-subtitle">Um sistema que decide sozinho quando e quanto irrigar — combinando três informações que hoje ninguém junta.</p>
           <div class="card-row">
@@ -187,12 +182,11 @@
               <p>consultada via API antes de decidir irrigar</p>
             </div>
           </div>
-          <div class="notes-panel" hidden>(~35s) Minha proposta: um sistema que junta três coisas que hoje ninguém junta em um sistema de baixo custo: umidade do solo em tempo real, o cálculo científico da real necessidade de água da planta (evapotranspiração, método da FAO), e a previsão do tempo.</div>
         </section>
 
         <!-- SLIDE 7 — O Cálculo Que Vamos Usar -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 7 de 15</span>
+          <span class="slide-eyebrow">Slide 7 de 14</span>
           <h2 class="slide-title-main">O Cálculo Que Vamos Usar 🧮</h2>
           <p class="slide-subtitle">Nada de achismo: a necessidade de água da planta é calculada, não estimada no olho.</p>
           <div class="formula-hero">
@@ -217,12 +211,11 @@
             </div>
           </div>
           <span class="news-footnote">Fonte do método: ALLEN, R. G. et al. FAO Irrigation and Drainage Paper 56, 1998; ZOTARELLI, L. et al., 2010.</span>
-          <div class="notes-panel" hidden>(~35s) O cálculo por trás da decisão é esse: ETc igual ETo vezes Kc. ETo é a evapotranspiração de referência, calculada pelo método Penman-Monteith, padrão da FAO. Kc é o coeficiente específico do rabanete, que muda conforme a fase da planta. O resultado, ETc, é quanto de água a planta realmente precisa naquele dia — e é isso que decide se o sistema vai irrigar ou não.</div>
         </section>
 
         <!-- SLIDE 8 — Como Funciona -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 8 de 15</span>
+          <span class="slide-eyebrow">Slide 8 de 14</span>
           <h2 class="slide-title-main">Como Funciona ⚙️</h2>
           <div class="flow-row">
             <div class="flow-step">
@@ -250,27 +243,11 @@
             </div>
           </div>
           <div class="slide-footline">🌧️ Se chover em breve, o sistema cancela a irrigação automaticamente.</div>
-          <div class="notes-panel" hidden>(~45s) Na prática: o ESP32 lê os sensores, meu backend em C#/.NET consulta a previsão do tempo e calcula a necessidade hídrica da planta, decide se irriga, e aciona a bomba. Se vai chover, ele cancela a irrigação sozinho.</div>
         </section>
 
-        <!-- SLIDE 9 — Protótipo de Painel Web -->
+        <!-- SLIDE 9 — Como Vamos Validar -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 9 de 15</span>
-          <h2 class="slide-title-main">Nosso Protótipo de Painel Web 🖥️🌱</h2>
-          <p class="slide-subtitle">Diferente do mockup original da banca, este painel já está funcionando de verdade — com dados reais de clima.</p>
-          <div class="cta-panel">
-            <div class="cta-text">
-              <h4>irrigacao-inteligente.local/painel</h4>
-              <p>Umidade do solo, previsão de chuva em tempo real (Open-Meteo), status da irrigação e comparação entre os 3 grupos — tudo calculado ao vivo, não ilustrativo.</p>
-            </div>
-            <a class="cta-button" href="{{ url_for('index') }}">🚿 Abrir protótipo interativo</a>
-          </div>
-          <div class="notes-panel" hidden>(~30s) Este é o mockup do painel web que o backend vai expor: umidade do solo em tempo real, previsão de chuva, status da irrigação, e comparação entre os grupos. Os números aqui são ilustrativos — ainda vamos gerar os dados reais durante o experimento.</div>
-        </section>
-
-        <!-- SLIDE 10 — Como Vamos Validar -->
-        <section class="slide">
-          <span class="slide-eyebrow">Slide 10 de 15</span>
+          <span class="slide-eyebrow">Slide 9 de 14</span>
           <h2 class="slide-title-main">Como Vamos Validar ⚖️</h2>
           <p class="slide-subtitle">Três grupos comparados lado a lado, por 25 a 35 dias:</p>
           <div class="card-row">
@@ -288,12 +265,11 @@
             </div>
           </div>
           <div class="slide-footline">🥬🌱 Cultura escolhida: rabanete (Raphanus sativus). Ciclo de 25 a 35 dias — cabe no prazo do experimento — e é sensível o suficiente ao déficit hídrico para mostrar diferença entre os grupos.</div>
-          <div class="notes-panel" hidden>(~40s) Para validar isso, vou rodar três grupos em paralelo por 25 a 35 dias: um com tempo fixo, um com limiar simples de umidade, e o meu grupo experimental com o sistema completo. A cultura escolhida é o rabanete, porque o ciclo dele cabe exatamente no prazo do experimento e ele é bem sensível à água, o que ajuda a enxergar diferença entre os grupos.</div>
         </section>
 
-        <!-- SLIDE 11 — O Que Vamos Medir -->
+        <!-- SLIDE 10 — O Que Vamos Medir -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 11 de 15</span>
+          <span class="slide-eyebrow">Slide 10 de 14</span>
           <h2 class="slide-title-main">O Que Vamos Medir 📊</h2>
           <div class="metric-list">
             <div class="metric-item">
@@ -322,12 +298,11 @@
               <p>irrigações canceladas por chuva prevista</p>
             </div>
           </div>
-          <div class="notes-panel" hidden>(~35s) As métricas que vou coletar: volume de água consumido por grupo, umidade do solo ao longo do tempo, saúde da planta no final, precisão da previsão do tempo, e quantas irrigações foram evitadas por causa da chuva prevista.</div>
         </section>
 
-        <!-- SLIDE 12 — O Que a Literatura Aponta -->
+        <!-- SLIDE 11 — O Que a Literatura Aponta -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 12 de 15</span>
+          <span class="slide-eyebrow">Slide 11 de 14</span>
           <h2 class="slide-title-main">O Que a Literatura Aponta 📚</h2>
           <p class="slide-subtitle">Esse é o tipo de resultado relatado por sistemas semelhantes ao nosso.</p>
           <div class="lit-panel">
@@ -341,12 +316,11 @@
             </div>
           </div>
           <div class="slide-footline">O experimento deste projeto ainda será executado — vamos comparar nossos três grupos e medir, com dados próprios, se o sistema proposto alcança uma economia de água na mesma direção.</div>
-          <div class="notes-panel" hidden>(~35s) Sistemas parecidos com o meu já relataram, na literatura, redução de até 23% no consumo de água só por incorporar previsão climática na decisão. Esse experimento ainda vai ser executado — a ideia é comparar meus três grupos e ver se chego a um resultado na mesma direção, com dados próprios.</div>
         </section>
 
-        <!-- SLIDE 13 — Cronograma -->
+        <!-- SLIDE 12 — Cronograma -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 13 de 15</span>
+          <span class="slide-eyebrow">Slide 12 de 14</span>
           <h2 class="slide-title-main">Cronograma 🗓️</h2>
           <div class="timeline">
             <div class="timeline-step">
@@ -376,12 +350,11 @@
             </div>
           </div>
           <div class="timeline-note">Defesa prevista para dezembro de 2027</div>
-          <div class="notes-panel" hidden>(~25s) O cronograma vai de setembro deste ano até dezembro de 2027: levantamento e submissão ao CEP agora, depois montagem do hardware e do backend, coleta de dados no início de 2027, análise e redação, e defesa prevista para dezembro de 2027.</div>
         </section>
 
-        <!-- SLIDE 14 — Referências -->
+        <!-- SLIDE 13 — Referências -->
         <section class="slide">
-          <span class="slide-eyebrow">Slide 14 de 15</span>
+          <span class="slide-eyebrow">Slide 13 de 14</span>
           <h2 class="slide-title-main">Referências 🔗</h2>
           <div class="refs-grid">
             <div class="ref-item">
@@ -417,10 +390,9 @@
               <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7730861/" target="_blank" rel="noopener">ncbi.nlm.nih.gov</a>
             </div>
           </div>
-          <div class="notes-panel" hidden>(~15s) Aqui estão todas as fontes usadas, com os links, para quem quiser conferir os dados originais.</div>
         </section>
 
-        <!-- SLIDE 15 — Obrigado -->
+        <!-- SLIDE 14 — Obrigado -->
         <section class="slide slide-cover">
           <div class="icon-badge dark">🤝</div>
           <h1>Obrigado! 🌱</h1>
@@ -429,7 +401,6 @@
             <strong>Guilherme Augusto Scaglia</strong>
             <span class="muted">Orientador: Prof. Pedro Luís Antonelli</span>
           </div>
-          <div class="notes-panel" hidden>(~15s) Obrigado pela atenção! Fico à disposição para perguntas.</div>
         </section>
 
       </div>
@@ -437,11 +408,10 @@
       <div class="deck-controls">
         <div class="deck-controls-group">
           <button class="deck-nav-btn" id="btnPrevSlide" type="button">← Anterior</button>
-          <span class="deck-counter" id="slideCounter">1 / 15</span>
+          <span class="deck-counter" id="slideCounter">1 / 14</span>
           <button class="deck-nav-btn" id="btnNextSlide" type="button">Próximo →</button>
         </div>
         <div class="deck-dots" id="slideDots"></div>
-        <button class="deck-toggle-btn" id="btnToggleNotes" type="button">📝 Notas do apresentador</button>
       </div>
     </div>
   </main>
