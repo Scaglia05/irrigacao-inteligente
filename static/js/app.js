@@ -7,7 +7,30 @@ let localAtual = { latitude: -22.3572, longitude: -47.3823, elevation: 630, name
 let chartUmidade = null;
 let chartConsumo = null;
 
-const CORES = { primary: "#028090", secondary: "#00A896", amber: "#F0A202", alert: "#D64550" };
+function cssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function hexToRgba(hex, alpha) {
+  const h = hex.replace("#", "");
+  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
+  const bigint = parseInt(full, 16);
+  const r = (bigint >> 16) & 255, g = (bigint >> 8) & 255, b = bigint & 255;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function getCores() {
+  return {
+    primary: cssVar("--primary"),
+    secondary: cssVar("--secondary"),
+    amber: cssVar("--amber"),
+    alert: cssVar("--alert"),
+    muted: cssVar("--muted"),
+    border: cssVar("--border"),
+  };
+}
+
+let CORES = getCores();
 
 function initCharts() {
   const ctxU = el("chartUmidade").getContext("2d");
@@ -19,7 +42,7 @@ function initCharts() {
         label: "Umidade do solo (%)",
         data: [],
         borderColor: CORES.primary,
-        backgroundColor: "rgba(2,128,144,0.08)",
+        backgroundColor: hexToRgba(CORES.primary, 0.08),
         pointBackgroundColor: CORES.primary,
         tension: 0.35,
         fill: true,
@@ -28,7 +51,10 @@ function initCharts() {
     options: {
       responsive: true,
       plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, max: 100, ticks: { callback: (v) => v + "%" } } },
+      scales: {
+        y: { beginAtZero: true, max: 100, ticks: { color: CORES.muted, callback: (v) => v + "%" }, grid: { color: CORES.border } },
+        x: { ticks: { color: CORES.muted }, grid: { color: CORES.border } },
+      },
     },
   });
 
@@ -47,10 +73,35 @@ function initCharts() {
     options: {
       responsive: true,
       plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, ticks: { callback: (v) => v + "L" } } },
+      scales: {
+        y: { beginAtZero: true, ticks: { color: CORES.muted, callback: (v) => v + "L" }, grid: { color: CORES.border } },
+        x: { ticks: { color: CORES.muted }, grid: { color: CORES.border } },
+      },
     },
   });
 }
+
+function applyChartTheme() {
+  CORES = getCores();
+  if (chartUmidade) {
+    const d = chartUmidade.data.datasets[0];
+    d.borderColor = CORES.primary;
+    d.backgroundColor = hexToRgba(CORES.primary, 0.08);
+    d.pointBackgroundColor = CORES.primary;
+    const s = chartUmidade.options.scales;
+    s.y.ticks.color = CORES.muted; s.y.grid.color = CORES.border;
+    s.x.ticks.color = CORES.muted; s.x.grid.color = CORES.border;
+    chartUmidade.update();
+  }
+  if (chartConsumo) {
+    chartConsumo.data.datasets[0].backgroundColor = [CORES.amber, CORES.amber, CORES.secondary];
+    const s = chartConsumo.options.scales;
+    s.y.ticks.color = CORES.muted; s.y.grid.color = CORES.border;
+    s.x.ticks.color = CORES.muted; s.x.grid.color = CORES.border;
+    chartConsumo.update();
+  }
+}
+document.addEventListener("themechange", applyChartTheme);
 
 function gerarSerieUmidadeSimulada(umidadeAtual) {
   // Simula os ultimos 7 dias de leitura do sensor, terminando no
