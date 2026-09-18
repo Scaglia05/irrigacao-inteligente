@@ -113,16 +113,16 @@
 .stat-callout.info { color: var(--primary); }
 .news-footnote { font-size: 11px; color: var(--muted); }
 
-/* ---------- CENÁRIOS AMBIENTE: SECA / TEMPESTADE ---------- */
+/* ---------- CENÁRIO AMBIENTE: SECA ---------- */
 /* z-index:0 no slide cria um contexto de empilhamento local, então os
    pseudo-elementos com z-index:-1 ficam atrás do conteúdo (que é z-index:auto),
    sem precisar tocar em cada filho individualmente. */
-.slide-seco, .slide-chuva {
+.slide-seco {
   position: relative;
   z-index: 0;
   overflow: hidden;
 }
-.slide-seco::before, .slide-seco::after, .slide-chuva::after {
+.slide-seco::before, .slide-seco::after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -180,95 +180,13 @@
   color: #4A2E10;
 }
 
-/* --- Chuva: tempestade com gotas caindo de verdade + raio --- */
-.slide-chuva {
-  background: linear-gradient(165deg, #13242e 0%, #1c3745 45%, #0d1a20 100%);
-}
-.slide-chuva::after {
-  inset: 0;
-  background: #fff;
-  opacity: 0;
-  animation: lightningFlash 8s infinite;
-}
-@keyframes lightningFlash {
-  0%, 92%, 100% { opacity: 0; }
-  93% { opacity: 0.75; }
-  94% { opacity: 0.08; }
-  95.5% { opacity: 0.45; }
-  97% { opacity: 0; }
-}
-
-.rain-drops {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-.rain-drops .drop {
-  position: absolute;
-  top: -12%;
-  width: 2px;
-  background: linear-gradient(to bottom, rgba(191, 233, 228, 0), rgba(191, 233, 228, 0.9));
-  animation-name: dropFall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-@keyframes dropFall {
-  from { top: -12%; opacity: 0; }
-  8% { opacity: 1; }
-  to { top: 112%; opacity: 0.55; }
-}
-
-.storm-bolt {
-  position: absolute;
-  top: 14%;
-  right: 12%;
-  z-index: -1;
-  font-size: 64px;
-  opacity: 0;
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8));
-  animation: boltFlash 8s infinite;
-  pointer-events: none;
-}
-@keyframes boltFlash {
-  0%, 92%, 100% { opacity: 0; transform: scale(0.9); }
-  93% { opacity: 1; transform: scale(1.05); }
-  94% { opacity: 0.15; transform: scale(0.95); }
-  95.5% { opacity: 0.9; transform: scale(1); }
-  97% { opacity: 0; transform: scale(0.9); }
-}
-
-.slide-chuva .slide-eyebrow {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--primary-dark);
-  padding: 3px 11px;
-  border-radius: 999px;
-}
-.slide-chuva .news-header,
-.slide-chuva .news-quote,
-.slide-chuva .news-body,
-.slide-chuva .news-bottom {
-  background: rgba(8, 22, 30, 0.6);
-  backdrop-filter: blur(3px);
-  border-radius: 12px;
-  padding: 14px 18px;
-  margin: 0;
-  color: #EAF6F4;
-}
-.slide-chuva .slide-title-main { color: #fff; }
-.slide-chuva .news-quote { color: #fff; }
-.slide-chuva .news-source { color: #9FD4CE; }
-.slide-chuva .news-footnote { color: #BFE9E4; }
-.slide-chuva .stat-callout.info { color: #7FE3D6; }
-
-/* ---------- SLIDE: 3 CARDS (por que / grupos) ---------- */
+/* ---------- SLIDE: 2/3 CARDS (por que / grupos / notícias) ---------- */
 .card-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
+.card-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 800px) { .card-row { grid-template-columns: 1fr; } }
 .mini-card {
   background: var(--card-bg);
@@ -339,6 +257,51 @@
 .flow-step p { font-size: 11.5px; color: var(--muted); margin: 0; }
 .flow-arrow { align-self: center; font-size: 20px; color: var(--secondary); }
 @media (max-width: 800px) { .flow-arrow { transform: rotate(90deg); } }
+
+/* ---------- SLIDE: MOCKUP / CTA / QR ---------- */
+.cta-panel {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.cta-panel .cta-text h4 { margin: 0 0 4px; font-size: 15px; color: var(--heading); }
+.cta-panel .cta-text p { margin: 0; font-size: 12.5px; color: var(--muted); max-width: 420px; }
+.cta-button {
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+.cta-button:hover { opacity: 0.92; }
+
+.qr-panel {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.qr-image {
+  width: 100px; height: 100px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: block;
+}
+.qr-text h4 { margin: 0 0 6px; font-size: 14px; color: var(--heading); }
+.qr-text a { color: var(--primary); font-weight: 600; font-size: 13px; word-break: break-all; }
 
 /* ---------- SLIDE: MÉTRICAS ---------- */
 .metric-list {
@@ -475,5 +438,8 @@
   .deck-controls-group { justify-content: space-between; }
   .deck-dots { order: 3; justify-content: center; max-width: 100%; }
 
-  .storm-bolt { font-size: 40px; }
+  .cta-panel, .qr-panel { flex-direction: column; align-items: stretch; text-align: center; padding: 16px; }
+  .cta-panel .cta-text p { max-width: none; }
+  .qr-panel { align-items: center; }
+  .qr-image { margin: 0 auto; }
 }
