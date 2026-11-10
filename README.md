@@ -18,7 +18,7 @@ grupos controle no experimento.
 
 - **Dropdown "Aspersor / Grupo experimental"** — escolha entre os 3
   grupos do experimento:
-  - **Controle A** — irrigação por tempo fixo (sempre a mesma duração)
+  - **Controle A** — irrigação programada, com lâmina fixa por acionamento (sempre a mesma duração)
   - **Controle B** — irrigação por limiar simples de umidade do solo
   - **Experimental** — sistema completo: umidade do solo + ETc + previsão climática
 - **Cálculo real de ETo** pelo método Penman-Monteith (FAO-56), usando

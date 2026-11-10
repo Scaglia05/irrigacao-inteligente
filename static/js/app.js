@@ -150,7 +150,7 @@ function atualizarMockComparacao(resultados) {
 }
 
 const GRUPO_DESC = {
-  controle_a: "Aciona a irrigação sempre no mesmo horário, por tempo fixo — não considera clima nem umidade do solo.",
+  controle_a: "Aciona a irrigação sempre no mesmo horário, com lâmina fixa — não considera clima nem umidade do solo.",
   controle_b: "Reage apenas à umidade do solo. Ignora a previsão do tempo.",
   experimental: "Combina umidade do solo, cálculo de ETc (Penman-Monteith / FAO-56) e previsão climática.",
 };
@@ -161,7 +161,7 @@ function atualizarCamposPorGrupo() {
 
   el("camposUmidade").style.display = grupo === "controle_a" ? "none" : "flex";
   el("camposEtc").style.display = grupo === "experimental" ? "block" : "none";
-  el("campoDuracaoFixa").style.display = grupo === "experimental" ? "none" : "block";
+  el("campoLaminaFixa").style.display = grupo === "experimental" ? "none" : "block";
 }
 
 async function buscarLocal() {
@@ -189,7 +189,7 @@ function payloadBase() {
     vazao_l_h: parseFloat(el("vazaoLH").value) || 120,
     umidade_solo: parseFloat(el("umidadeSolo").value),
     fase_cultura: el("faseCultura").value,
-    duracao_fixa_min: parseFloat(el("duracaoFixa").value) || 15,
+    lamina_fixa_mm: parseFloat(el("laminaFixa").value) || 3.5,
   };
 }
 

@@ -21,7 +21,7 @@ from irrigation.decision import (
     decidir_controle_a,
     decidir_controle_b,
     decidir_experimental,
-    DURACAO_FIXA_PADRAO_MIN,
+    LAMINA_FIXA_PADRAO_MM,
 )
 
 app = Flask(__name__)
@@ -62,7 +62,7 @@ def api_calcular():
     vazao_l_h = float(payload.get("vazao_l_h", 120))
     umidade_solo = float(payload.get("umidade_solo", 40))
     fase_cultura = payload.get("fase_cultura", "medio")
-    duracao_fixa_min = float(payload.get("duracao_fixa_min", DURACAO_FIXA_PADRAO_MIN))
+    lamina_fixa_mm = float(payload.get("lamina_fixa_mm", LAMINA_FIXA_PADRAO_MM))
 
     try:
         clima = weather_api.fetch_today_weather(latitude, longitude, elevation)
@@ -70,9 +70,9 @@ def api_calcular():
         return jsonify({"ok": False, "erro": f"Falha ao consultar previsão do tempo: {exc}"}), 502
 
     if grupo == "controle_a":
-        resultado = decidir_controle_a(area_m2, vazao_l_h, duracao_fixa_min)
+        resultado = decidir_controle_a(area_m2, vazao_l_h, lamina_fixa_mm)
     elif grupo == "controle_b":
-        resultado = decidir_controle_b(umidade_solo, area_m2, vazao_l_h, duracao_fixa_min)
+        resultado = decidir_controle_b(umidade_solo, area_m2, vazao_l_h, lamina_fixa_mm)
     elif grupo == "experimental":
         resultado = decidir_experimental(umidade_solo, clima, fase_cultura, area_m2, vazao_l_h)
     else:
@@ -93,7 +93,7 @@ def api_comparar():
     vazao_l_h = float(payload.get("vazao_l_h", 120))
     umidade_solo = float(payload.get("umidade_solo", 40))
     fase_cultura = payload.get("fase_cultura", "medio")
-    duracao_fixa_min = float(payload.get("duracao_fixa_min", DURACAO_FIXA_PADRAO_MIN))
+    lamina_fixa_mm = float(payload.get("lamina_fixa_mm", LAMINA_FIXA_PADRAO_MM))
 
     try:
         clima = weather_api.fetch_today_weather(latitude, longitude, elevation)
@@ -101,8 +101,8 @@ def api_comparar():
         return jsonify({"ok": False, "erro": f"Falha ao consultar previsão do tempo: {exc}"}), 502
 
     resultados = {
-        "controle_a": decidir_controle_a(area_m2, vazao_l_h, duracao_fixa_min),
-        "controle_b": decidir_controle_b(umidade_solo, area_m2, vazao_l_h, duracao_fixa_min),
+        "controle_a": decidir_controle_a(area_m2, vazao_l_h, lamina_fixa_mm),
+        "controle_b": decidir_controle_b(umidade_solo, area_m2, vazao_l_h, lamina_fixa_mm),
         "experimental": decidir_experimental(umidade_solo, clima, fase_cultura, area_m2, vazao_l_h),
     }
     return jsonify({"ok": True, "clima": clima, "resultados": resultados})
