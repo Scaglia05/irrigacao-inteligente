@@ -126,7 +126,8 @@ def main():
     metricas("app com vento MEDIO horario", app_med, om)
 
     print("\n== 2. Linha de base do Controle A (lamina fixa diaria) x Experimental ==")
-    etc = [x["eto_app_vento_medio"] * KC for x in dias]
+    # Mesma ETo que o app usa em producao (vento maximo diario, como em weather.py).
+    etc = [x["eto_app_vento_max"] * KC for x in dias]
     chuvosos = [x["chuva_mm"] >= CHUVA_PREVISTA_MM for x in dias]
     n_chuva = sum(chuvosos)
     soma_etc = sum(etc)

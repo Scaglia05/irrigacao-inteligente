@@ -189,7 +189,7 @@ function payloadBase() {
     vazao_l_h: parseFloat(el("vazaoLH").value) || 120,
     umidade_solo: parseFloat(el("umidadeSolo").value),
     fase_cultura: el("faseCultura").value,
-    lamina_fixa_mm: parseFloat(el("laminaFixa").value) || 3.5,
+    lamina_fixa_mm: parseFloat(el("laminaFixa").value) || 3.6,
   };
 }
 
