@@ -61,6 +61,7 @@ def decidir_controle_a(area_m2: float, vazao_l_h: float, lamina_fixa_mm: float) 
         "grupo": "Controle A",
         "estrategia": "Tempo fixo",
         "irrigar": True,
+        "codigo": "programado",
         "motivo": (f"Acionamento programado de {lamina_fixa_mm:.1f} mm ({calc['duracao_min']:.1f} min), "
                    "independente do clima ou da umidade do solo."),
         "duracao_min": calc["duracao_min"],
@@ -88,6 +89,7 @@ def decidir_controle_b(umidade_solo: float, area_m2: float, vazao_l_h: float,
         "grupo": "Controle B",
         "estrategia": "Limiar de umidade",
         "irrigar": irrigar,
+        "codigo": "limiar_solo" if irrigar else "solo_acima_limiar",
         "motivo": motivo,
         "duracao_min": round(duracao, 1),
         "volume_l": round(volume_l, 2),
@@ -129,15 +131,18 @@ def decidir_experimental(umidade_solo: float, weather: dict, fase_cultura: str,
 
     if vai_chover:
         irrigar = False
+        codigo = "chuva_prevista"
         motivo = (f"Previsão de chuva de {w.precipitation_prob_24h:.0f}% nas próximas 24h "
                   f"(acima do limiar de {LIMIAR_PROBABILIDADE_CHUVA:.0f}%) — irrigação suspensa.")
         duracao, volume = 0.0, 0.0
     elif solo_ja_umido:
         irrigar = False
+        codigo = "solo_umido"
         motivo = f"Umidade do solo já elevada ({umidade_solo:.0f}%) — irrigação não é necessária hoje."
         duracao, volume = 0.0, 0.0
     else:
         irrigar = True
+        codigo = "etc"
         motivo = (f"ETc calculada em {etc:.2f} mm/dia (ETo {eto:.2f} × Kc {kc:.2f}); "
                   f"solo em {umidade_solo:.0f}% e sem previsão relevante de chuva.")
         duracao, volume = calc["duracao_min"], calc["volume_l"]
@@ -146,6 +151,7 @@ def decidir_experimental(umidade_solo: float, weather: dict, fase_cultura: str,
         "grupo": "Experimental",
         "estrategia": "Sistema completo (ETc + clima + solo)",
         "irrigar": irrigar,
+        "codigo": codigo,
         "motivo": motivo,
         "duracao_min": round(duracao, 1),
         "volume_l": round(volume, 2),

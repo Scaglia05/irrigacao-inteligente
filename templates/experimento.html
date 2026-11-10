@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acompanhamento do experimento — Sistema de Irrigação Inteligente</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/experimento.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script>
+    (function () {
+      var t = localStorage.getItem("irrigacao-tema") ||
+        (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+
+  <div class="dev-banner">
+    <div class="dev-banner-track">
+      <span>🚧 Protótipo em desenvolvimento — versão 1.3.5</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+      <span>🚧 Protótipo em desenvolvimento — versão 1.3.5</span>
+      <span>🌱 TCC em andamento</span>
+      <span>🚿 Dados e funcionalidades sujeitos a mudança</span>
+      <span>💧 Sistema de Irrigação Inteligente</span>
+    </div>
+    <button class="dev-banner-info" id="devBannerInfo" title="Mais informações">ℹ️</button>
+  </div>
+  <div class="dev-popover" id="devPopover">
+    <span class="version-tag">Protótipo v1.3.5</span>
+    <h4>Dados do experimento</h4>
+    <p>Esta tela mostra as métricas do artigo (volume, umidade, saúde da planta, acionamentos evitados,
+       precisão da previsão e EUA) a partir do banco de dados do backend. Enquanto o hardware não existe,
+       as leituras de solo são registradas manualmente.</p>
+  </div>
+
+  <div class="spine"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-icon">🧪</span>
+      <div>
+        <h1>Acompanhamento do experimento<span class="version-badge">v1.3.5</span></h1>
+        <p>Três grupos de rabanete — métricas do projeto de pesquisa</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <nav class="topbar-nav">
+        <a href="{{ url_for('index') }}">🖥️ Painel</a>
+        <a href="{{ url_for('experimento') }}" class="active">🧪 Experimento</a>
+        <a href="{{ url_for('apresentacao') }}">🎤 Apresentação</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" title="Mudar tema">🌙</button>
+      <div class="brand-meta">
+        <span>Guilherme Augusto Scaglia</span>
+        <span class="muted">Eng. Computação · FHO</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="exp-page">
+
+    <div class="exp-toolbar">
+      <span class="muted" id="atualizadoEm" role="status">Carregando…</span>
+      <button class="btn-ghost-text" id="btnAtualizar" type="button">↻ Atualizar</button>
+    </div>
+
+    <section aria-labelledby="tituloGrupos">
+      <h2 class="exp-titulo" id="tituloGrupos">Resumo por grupo</h2>
+      <div class="grupo-cards" id="grupoCards"></div>
+    </section>
+
+    <section class="exp-graficos">
+      <div class="panel">
+        <h2>Volume acumulado de água (L)</h2>
+        <div class="chart-box"><canvas id="chartVolume" aria-label="Volume acumulado por grupo"></canvas></div>
+        <p class="muted" id="notaVolume"></p>
+      </div>
+      <div class="panel">
+        <h2>Umidade do solo (%)</h2>
+        <div class="chart-box"><canvas id="chartUmidade" aria-label="Umidade do solo por grupo"></canvas></div>
+        <p class="muted" id="notaUmidade"></p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="tituloPrev">
+      <h2 id="tituloPrev">Precisão da previsão climática</h2>
+      <div class="prev-grid" id="prevGrid"></div>
+      <p class="muted" id="prevNota"></p>
+    </section>
+
+    <section class="panel registrar" aria-labelledby="tituloReg">
+      <h2 id="tituloReg">Registrar dados</h2>
+      <p class="muted">A escrita exige o token do servidor (variável <code>INGEST_TOKEN</code>). Ele fica só nesta aba do navegador.</p>
+      <label class="field">
+        <span>Token de API</span>
+        <input id="token" type="password" autocomplete="off" placeholder="X-API-Key" />
+      </label>
+      <div class="acoes">
+        <button class="btn-primary" id="btnDecidir" type="button">Decidir hoje (3 grupos)</button>
+        <button class="btn-secondary" id="btnChuva" type="button">Atualizar chuva observada</button>
+      </div>
+      <div class="exp-forms">
+        <form id="formLeitura" class="form-card" novalidate>
+          <h3>Leitura de solo</h3>
+          <label class="field"><span>Grupo</span>
+            <select id="leituraGrupo" name="grupo">
+              <option value="controle_b">Controle B</option>
+              <option value="experimental">Experimental</option>
+              <option value="controle_a">Controle A</option>
+            </select>
+          </label>
+          <label class="field"><span>Umidade (%)</span>
+            <input id="leituraUmidade" name="umidade_pct" type="number" inputmode="decimal" min="0" max="100" step="0.1" required />
+          </label>
+          <button class="btn-primary" type="submit">Registrar leitura</button>
+        </form>
+
+        <form id="formMedicao" class="form-card" novalidate>
+          <h3>Medição da planta</h3>
+          <div class="field-row">
+            <label class="field"><span>Grupo</span>
+              <select id="medGrupo" name="grupo">
+                <option value="controle_a">Controle A</option>
+                <option value="controle_b">Controle B</option>
+                <option value="experimental">Experimental</option>
+              </select>
+            </label>
+            <label class="field"><span>Vaso</span>
+              <input id="medVaso" name="vaso" type="number" inputmode="numeric" min="1" max="3" step="1" value="1" required />
+            </label>
+          </div>
+          <label class="field"><span>Data</span><input id="medData" name="data" type="date" required /></label>
+          <div class="field-row">
+            <label class="field"><span>Altura (cm)</span><input name="altura_cm" type="number" inputmode="decimal" min="0" step="0.1" /></label>
+            <label class="field"><span>Folhas</span><input name="n_folhas" type="number" inputmode="numeric" min="0" step="1" /></label>
+          </div>
+          <div class="field-row">
+            <label class="field"><span>Massa fresca (g)</span><input name="massa_fresca_g" type="number" inputmode="decimal" min="0" step="0.01" /></label>
+            <label class="field"><span>Massa seca (g)</span><input name="massa_seca_g" type="number" inputmode="decimal" min="0" step="0.01" /></label>
+          </div>
+          <button class="btn-primary" type="submit">Registrar medição</button>
+        </form>
+      </div>
+      <div id="statusMsg" class="status-msg" role="status" aria-live="polite"></div>
+      <div id="resultadoDecisao" class="resultado-decisao" hidden></div>
+    </section>
+
+    <section class="panel" aria-labelledby="tituloDec">
+      <h2 id="tituloDec">Decisões recentes</h2>
+      <div class="tabela-wrap">
+        <table class="tabela-resp" id="tabelaDecisoes">
+          <thead><tr><th>Data</th><th>Grupo</th><th>Decisão</th><th>Volume (L)</th><th>Motivo</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="muted" id="semDecisoes" hidden>Nenhuma decisão registrada ainda. Use “Decidir hoje”.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="tituloCsv">
+      <h2 id="tituloCsv">Exportar dados (CSV)</h2>
+      <div class="csv-links">
+        <a class="btn-link" href="{{ url_for('experimento.exportar', tabela='decisoes') }}">Decisões</a>
+        <a class="btn-link" href="{{ url_for('experimento.exportar', tabela='leituras') }}">Leituras de solo</a>
+        <a class="btn-link" href="{{ url_for('experimento.exportar', tabela='acionamentos') }}">Acionamentos</a>
+        <a class="btn-link" href="{{ url_for('experimento.exportar', tabela='medicoes') }}">Medições</a>
+        <a class="btn-link" href="{{ url_for('experimento.exportar', tabela='clima') }}">Clima do dia</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Protótipo desenvolvido para fins acadêmicos — TCC em Engenharia de Computação, FHO.
+       EUA = massa fresca média por vaso ÷ volume de água por vaso (g/L).</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/banner.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/experimento.js') }}"></script>
+</body>
+</html>
