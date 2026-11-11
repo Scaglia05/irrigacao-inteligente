@@ -8,6 +8,9 @@ Expõe:
   GET  /api/localizacao     -> geocodifica uma cidade (nome -> lat/lon)
   POST /api/calcular        -> calcula a decisão de irrigação para o
                                 aspersor/grupo selecionado
+  GET  /experimento         -> acompanhamento do experimento (3 grupos)
+  /api/exp/...              -> leituras, decisões, medições e métricas
+                                (ver experimento/api.py)
 
 Autor: Guilherme Augusto Scaglia — Engenharia de Computação (FHO)
 Orientador: Prof. Pedro Luís Antonelli
@@ -16,6 +19,7 @@ Orientador: Prof. Pedro Luís Antonelli
 import os
 from flask import Flask, jsonify, render_template, request
 
+from experimento.api import bp as experimento_bp
 from irrigation import weather as weather_api
 from irrigation.decision import (
     decidir_controle_a,
@@ -25,6 +29,7 @@ from irrigation.decision import (
 )
 
 app = Flask(__name__)
+app.register_blueprint(experimento_bp)
 
 # Cidade padrão usada quando o usuário ainda não digitou nada
 CIDADE_PADRAO = "Araras, SP"
@@ -38,6 +43,11 @@ def index():
 @app.route("/apresentacao")
 def apresentacao():
     return render_template("apresentacao.html")
+
+
+@app.route("/experimento")
+def experimento():
+    return render_template("experimento.html")
 
 
 @app.route("/api/localizacao")
