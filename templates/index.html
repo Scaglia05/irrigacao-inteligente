@@ -52,6 +52,7 @@
     <div class="topbar-right">
       <nav class="topbar-nav">
         <a href="{{ url_for('index') }}" class="active">🖥️ Painel</a>
+        <a href="{{ url_for('experimento') }}">🧪 Experimento</a>
         <a href="{{ url_for('apresentacao') }}">🎤 Apresentação</a>
       </nav>
       <button class="theme-toggle" id="themeToggle" type="button" title="Mudar tema">🌙</button>
@@ -154,9 +155,9 @@
         </label>
       </div>
 
-      <div id="campoDuracaoFixa" class="field">
-        <span>Duração fixa por acionamento (min)</span>
-        <input id="duracaoFixa" type="number" step="1" min="1" value="15" />
+      <div id="campoLaminaFixa" class="field">
+        <span>Lâmina fixa por acionamento (mm)</span>
+        <input id="laminaFixa" type="number" step="0.1" min="0.1" value="3.6" />
       </div>
 
       <button id="btnCalcular" class="btn-primary">Calcular irrigação</button>

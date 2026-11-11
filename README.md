@@ -18,7 +18,7 @@ grupos controle no experimento.
 
 - **Dropdown "Aspersor / Grupo experimental"** — escolha entre os 3
   grupos do experimento:
-  - **Controle A** — irrigação por tempo fixo (sempre a mesma duração)
+  - **Controle A** — irrigação programada, com lâmina fixa por acionamento (sempre a mesma duração)
   - **Controle B** — irrigação por limiar simples de umidade do solo
   - **Experimental** — sistema completo: umidade do solo + ETc + previsão climática
 - **Cálculo real de ETo** pelo método Penman-Monteith (FAO-56), usando
@@ -42,6 +42,59 @@ python app.py
 ```
 
 Acesse **http://localhost:5000**.
+
+## Acompanhamento do experimento (`/experimento`)
+
+Tela e API que sustentam as métricas do artigo (volume de água por grupo,
+umidade do solo, saúde da planta, acionamentos evitados por previsão de
+chuva, precisão da previsão e EUA), com os dados guardados em SQLite.
+
+Variáveis de ambiente:
+
+| Variável | Para que serve |
+|---|---|
+| `INGEST_TOKEN` | Token exigido (cabeçalho `X-API-Key`) em todas as rotas que gravam. Sem ele, a escrita fica **desativada**. A leitura é pública. |
+| `DATABASE_PATH` | Caminho do arquivo SQLite (padrão: `data/experimento.db`, ignorado pelo Git). |
+
+No plano gratuito do Render o disco é efêmero: o banco é apagado a cada
+reinício. Para o experimento real, use um disco persistente ou rode
+o sistema localmente.
+
+Rotas principais (prefixo `/api/exp`):
+
+| Rota | Quem usa | O que faz |
+|---|---|---|
+| `POST /leituras` | ESP32 | Grava a umidade do solo: `{"grupo": "experimental", "umidade_pct": 41.5}` |
+| `POST /decidir` | ESP32 ou tela | Consulta a previsão, decide e registra o dia: `{}` (3 grupos) ou `{"grupo": "controle_b"}` |
+| `POST /acionamentos` | ESP32 | Registra a água realmente aplicada: `{"grupo": "experimental", "volume_l": 1.02}` |
+| `POST /medicoes` | Tela | Altura, folhas e massa fresca/seca por vaso |
+| `POST /chuva-observada/atualizar` | Tela | Busca a chuva observada na Open-Meteo para os dias já fechados |
+| `GET /metricas` | Tela | Todas as métricas e séries |
+| `GET /export/<tabela>.csv` | Análise | `decisoes`, `leituras`, `acionamentos`, `medicoes`, `clima` |
+
+Exemplo (PowerShell) de leitura enviada pelo firmware:
+
+```powershell
+$h = @{ "X-API-Key" = $env:INGEST_TOKEN }
+Invoke-RestMethod -Method Post -Uri http://localhost:5000/api/exp/leituras -Headers $h `
+  -ContentType "application/json" -Body '{"grupo":"experimental","umidade_pct":41.5}'
+```
+
+Definições adotadas: a decisão é uma por grupo e por dia; o volume usado nas
+métricas é o **aplicado** quando há acionamentos registrados, senão o
+**planejado** pela decisão; EUA = massa fresca média por vaso ÷ (volume do
+grupo ÷ número de vasos), supondo doses iguais entre os vasos de um grupo;
+previsão "acertou" quando (chance de chuva ≥ 60%) coincide com (chuva
+observada ≥ 1 mm).
+
+## Testes
+
+```bash
+python -m unittest discover -s tests -v
+```
+
+Cobrem a API (token, validação, decisão, métricas, EUA, previsão, CSV) e a
+resposta das páginas. Não exigem internet: previsão e chuva são simuladas.
 
 ## Como publicar no Render
 

@@ -1,0 +1,137 @@
+/* ============ ACOMPANHAMENTO DO EXPERIMENTO ============ */
+.exp-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 40px 30px 46px;
+  display: grid;
+  gap: 22px;
+}
+.exp-page > * { min-width: 0; }
+
+.exp-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-ghost-text {
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--heading);
+  border-radius: 9px;
+  padding: 8px 14px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-ghost-text:hover { background: var(--card-bg); }
+
+.exp-titulo { font-size: 18px; color: var(--heading); margin-bottom: 12px; }
+
+/* ---------- Cards por grupo ---------- */
+.grupo-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.g-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.g-card.melhor { border-color: var(--secondary); background: var(--highlight-bg); }
+.g-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.g-head h3 { font-size: 15.5px; color: var(--heading); flex: 1 1 auto; min-width: 0; }
+.dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+.tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--neutral-bg);
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tag.ok { background: var(--success-bg); color: var(--success-text); }
+.g-eua { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.g-eua .valor { font-family: 'Lora', serif; font-size: 30px; font-weight: 700; color: var(--primary); line-height: 1; }
+.g-eua .rotulo { font-size: 12px; color: var(--muted); }
+.g-metricas { margin: 0; display: grid; gap: 7px; }
+.g-metricas div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.g-metricas dt { color: var(--muted); }
+.g-metricas dd { margin: 0; font-weight: 600; color: var(--text); text-align: right; }
+
+/* ---------- Gráficos ---------- */
+.exp-graficos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+.exp-graficos > * { min-width: 0; }
+.chart-box { position: relative; height: 270px; }
+.panel > .muted { margin: 10px 0 0; }
+
+/* ---------- Previsão ---------- */
+.prev-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.prev-item { background: var(--card-bg); border-radius: 12px; padding: 14px; min-width: 0; }
+.prev-item span { display: block; font-size: 12px; color: var(--muted); }
+.prev-item strong { font-family: 'Lora', serif; font-size: 22px; color: var(--primary); }
+
+/* ---------- Registrar dados ---------- */
+.registrar code { background: var(--card-bg); padding: 1px 6px; border-radius: 6px; font-size: 12px; }
+.acoes { display: flex; gap: 12px; flex-wrap: wrap; margin: 4px 0 18px; }
+.acoes .btn-primary, .acoes .btn-secondary { width: auto; flex: 1 1 220px; margin-top: 0; }
+.exp-forms { display: grid; grid-template-columns: 1fr 1.4fr; gap: 18px; }
+.exp-forms > * { min-width: 0; }
+.form-card { border: 1.5px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; }
+.form-card h3 { font-size: 15px; color: var(--heading); margin-bottom: 12px; }
+.form-card .field-row { flex-direction: row; gap: 12px; }
+.form-card .field-row .field { min-width: 0; }
+.form-card .btn-primary { margin-top: 2px; }
+.resultado-decisao { margin-top: 14px; display: grid; gap: 8px; }
+.res-item { border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 13px; }
+.res-item strong { color: var(--heading); }
+.res-item.erro { border-color: var(--alert); }
+
+/* ---------- Tabela de decisões ---------- */
+.tabela-wrap { overflow-x: auto; }
+.tabela-resp { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tabela-resp th { text-align: left; color: var(--muted); font-weight: 600; padding: 8px 10px; border-bottom: 1.5px solid var(--border); }
+.tabela-resp td { padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.tabela-resp td.motivo { color: var(--muted); min-width: 260px; }
+
+/* ---------- CSV ---------- */
+.csv-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn-link {
+  border: 1.5px solid var(--border);
+  border-radius: 9px;
+  padding: 9px 16px;
+  color: var(--heading);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  background: var(--white);
+}
+.btn-link:hover { background: var(--card-bg); }
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 960px) {
+  .grupo-cards { grid-template-columns: 1fr; }
+  .exp-graficos { grid-template-columns: 1fr; }
+  .prev-grid { grid-template-columns: repeat(2, 1fr); }
+  .exp-forms { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .exp-page { padding: 14px 12px 24px; gap: 16px; }
+  .chart-box { height: 230px; }
+  .g-eua .valor { font-size: 26px; }
+
+  /* tabela vira lista de cartões: cada linha empilha seus campos */
+  .tabela-resp thead { display: none; }
+  .tabela-resp, .tabela-resp tbody, .tabela-resp tr, .tabela-resp td { display: block; width: 100%; }
+  .tabela-resp tr { border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 12px; margin-bottom: 10px; }
+  .tabela-resp td { border: none; padding: 3px 0; display: flex; justify-content: space-between; gap: 14px; text-align: right; }
+  .tabela-resp td::before { content: attr(data-rotulo); color: var(--muted); font-weight: 600; text-align: left; flex-shrink: 0; }
+  .tabela-resp td.motivo { min-width: 0; }
+}
