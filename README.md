@@ -5,7 +5,7 @@ Protótipo web que calcula a necessidade hídrica do rabanete (Penman-Monteith F
 ![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Flask 3.0.3](https://img.shields.io/badge/flask-3.0.3-lightgrey)
 
-[![Ler o documento](https://img.shields.io/badge/Documento-ler_o_PDF-B31B1B?style=for-the-badge)](docs/p2/Texto_TCC_P2.pdf)
+[![Ler o documento](https://img.shields.io/badge/Documento-ler_o_PDF-B31B1B?style=for-the-badge)](docs/p2/Artigo_TCC_Irrigacao_Inteligente.pdf)
 
 ## Sumário
 
@@ -189,7 +189,7 @@ Rotas do experimento (prefixo `/api/exp`; as de escrita exigem `X-API-Key`):
 | Arquivo | Descrição | Pré-requisitos |
 |---|---|---|
 | `analise/validacao_eto_e_linha_base.py` | Compara a ETo do app com a da Open-Meteo e calcula a economia do grupo Experimental para diferentes linhas de base do Controle A; grava um CSV diário opcional | Exige internet |
-| `docs/p2/Texto_TCC_P2.pdf` | Texto da etapa P2 | Leitor de PDF |
+| `docs/p2/Artigo_TCC_Irrigacao_Inteligente.pdf` | Artigo da etapa pré-TCC (P2), versão final | Leitor de PDF |
 | `docs/p2/Apresentacao_TCC_P2.pdf` | Slides da etapa P2 | Leitor de PDF |
 
 Execução do primeiro exemplo (período de 01/02 a 30/04/2026, Araras, Kc 0,90), com a saída resumida:
@@ -329,9 +329,9 @@ Instância atual: `https://irrigacao-inteligente-hh7z.onrender.com/`. No plano g
 
 ## Documentação
 
-Texto da etapa P2 no modelo da FHO, com fundamentação, método, resultados da validação e limitações. Também estão em `docs/p2/` os slides (`Apresentacao_TCC_P2.pdf`) e, em `docs/p1-beta/`, o projeto da etapa anterior.
+Artigo da etapa pré-TCC (P2), com 20 páginas: introdução, referencial teórico, trabalhos correlatos, material e método, resultados esperados e conclusão. Também estão em `docs/p2/` os slides (`Apresentacao_TCC_P2.pdf`) e, em `docs/p1-beta/`, o projeto da etapa anterior.
 
-[![Ler o documento](https://img.shields.io/badge/Documento-ler_o_PDF-B31B1B?style=for-the-badge)](docs/p2/Texto_TCC_P2.pdf)
+[![Ler o documento](https://img.shields.io/badge/Documento-ler_o_PDF-B31B1B?style=for-the-badge)](docs/p2/Artigo_TCC_Irrigacao_Inteligente.pdf)
 
 Referências do cálculo:
 
