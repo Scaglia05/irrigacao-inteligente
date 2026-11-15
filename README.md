@@ -16,6 +16,7 @@ Protótipo web que calcula a necessidade hídrica do rabanete (Penman-Monteith F
 - [Uso](#uso)
 - [Regras de decisão e definições](#regras-de-decisão-e-definições)
 - [API](#api)
+- [Exemplos incluídos](#exemplos-incluídos)
 - [Arquitetura](#arquitetura)
 - [Tratamento de erros](#tratamento-de-erros)
 - [Testes](#testes)
@@ -182,6 +183,30 @@ Rotas do experimento (prefixo `/api/exp`; as de escrita exigem `X-API-Key`):
 | `/medicoes` | POST | Tela | Altura, folhas e massa fresca ou seca por vaso |
 | `/chuva-observada/atualizar` | POST | Tela | Busca a chuva observada para os dias já encerrados |
 | `/export/<tabela>.csv` | GET | Análise | Tabelas `decisoes`, `leituras`, `acionamentos`, `medicoes` e `clima` |
+
+## Exemplos incluídos
+
+| Arquivo | Descrição | Pré-requisitos |
+|---|---|---|
+| `analise/validacao_eto_e_linha_base.py` | Compara a ETo do app com a da Open-Meteo e calcula a economia do grupo Experimental para diferentes linhas de base do Controle A; grava um CSV diário opcional | Exige internet |
+| `docs/p2/Texto_TCC_P2.pdf` | Texto da etapa P2 | Leitor de PDF |
+| `docs/p2/Apresentacao_TCC_P2.pdf` | Slides da etapa P2 | Leitor de PDF |
+
+Execução do primeiro exemplo (período de 01/02 a 30/04/2026, Araras, Kc 0,90), com a saída resumida:
+
+```bash
+python analise/validacao_eto_e_linha_base.py 2026-02-01 2026-04-30
+```
+
+```
+89 dias validos | Araras-SP (-22.3572, -47.3823) | Kc = 0.9
+app com vento MAXIMO diario   vies=+0.006  MAE=0.121  RMSE=0.146  r=0.990  (mm/dia)
+ETc media: 3.64 mm/dia | dias com chuva >= 1 mm (proxy de previsao): 39 de 89
+= ETc media (conservadora)    3.64 mm/dia   economia do Exp.: 35.7%
+= ETc maxima do periodo       5.39 mm/dia   economia do Exp.: 56.6%
+```
+
+A economia depende da linha de base escolhida: quanto maior a lâmina do Controle A, maior a economia aparente do Experimental.
 
 ## Arquitetura
 
