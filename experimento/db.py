@@ -20,13 +20,13 @@ GRUPOS = {
 }
 
 CONFIG_PADRAO = {
-    "latitude": "-22.3572",
-    "longitude": "-47.3823",
-    "elevation": "630",
+    "latitude": "-22.4114",
+    "longitude": "-47.5614",
+    "elevation": "617",
     "area_m2": "0.25",
     "vazao_l_h": "120",
     "fase_cultura": "medio",
-    "lamina_fixa_mm": "3.6",
+    "lamina_fixa_mm": "3.75",
     "chuva_observada_limiar_mm": "1.0",
 }
 

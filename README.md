@@ -123,7 +123,7 @@ Invoke-RestMethod -Method Post -Uri http://localhost:5000/api/exp/leituras -Head
   -ContentType "application/json" -Body '{"grupo":"experimental","umidade_pct":41.5}'
 ```
 
-Exemplo de comparação dos três grupos, executado em 11/11/2026 para Araras:
+Exemplo de comparação dos três grupos, executado em 15/11/2026 para Rio Claro (local do experimento):
 
 ```bash
 curl -X POST http://localhost:5000/api/comparar -H "Content-Type: application/json" \
@@ -134,24 +134,24 @@ Resumo da resposta (campos selecionados):
 
 | Grupo | `irrigar` | `codigo` | `volume_l` | `duracao_min` |
 |---|---|---|---|---|
-| `controle_a` | `true` | `programado` | 0,9 | 0,5 |
+| `controle_a` | `true` | `programado` | 0,94 | 0,5 |
 | `controle_b` | `false` | `solo_acima_limiar` | 0,0 | 0,0 |
 | `experimental` | `false` | `chuva_prevista` | 0,0 | 0,0 |
 
-Nesse dia a previsão era de 82% de chance de chuva, ETo de 4,659 mm e ETc de 4,193 mm. O resultado muda a cada dia com a previsão.
+Nesse dia a previsão era de 81% de chance de chuva, ETo de 4,096 mm e ETc de 3,686 mm. O resultado muda a cada dia com a previsão.
 
 ## Regras de decisão e definições
 
 | Grupo | Regra |
 |---|---|
-| Controle A | Aplica uma lâmina fixa diária (padrão 3,6 mm), sem considerar clima ou solo |
+| Controle A | Aplica uma lâmina fixa diária (padrão 3,75 mm), sem considerar clima ou solo |
 | Controle B | Aplica a mesma lâmina fixa se a umidade do solo for menor que 35% |
 | Experimental | Suspende se a chance de chuva for 60% ou mais, ou se o solo estiver com 50% ou mais; caso contrário, aplica a ETc do dia |
 
 Definições adotadas:
 
 - **Lâmina e volume:** 1 mm sobre 1 m² equivale a 1 L. Volume (L) = lâmina (mm) × área (m²).
-- **Lâmina padrão de 3,6 mm:** ETc média do rabanete (Kc 0,90) em Araras entre 01/02/2026 e 30/04/2026. Foi calculada por `analise/validacao_eto_e_linha_base.py`. Evita que a economia do grupo Experimental seja efeito de um controle superdimensionado.
+- **Lâmina padrão de 3,75 mm:** ETc média do rabanete (Kc 0,90) em Rio Claro entre 01/02/2026 e 30/04/2026. Foi calculada por `analise/validacao_eto_e_linha_base.py`. Evita que a economia do grupo Experimental seja efeito de um controle superdimensionado.
 - **Chance de chuva:** máximo da probabilidade horária das primeiras 24 horas retornadas pela Open-Meteo, a partir da meia-noite do dia corrente.
 - **Decisão:** uma por grupo e por dia.
 - **Volume nas métricas:** o volume aplicado, quando há acionamentos registrados; senão, o planejado pela decisão.
@@ -192,18 +192,18 @@ Rotas do experimento (prefixo `/api/exp`; as de escrita exigem `X-API-Key`):
 | `docs/p2/Texto_TCC_P2.pdf` | Texto da etapa P2 | Leitor de PDF |
 | `docs/p2/Apresentacao_TCC_P2.pdf` | Slides da etapa P2 | Leitor de PDF |
 
-Execução do primeiro exemplo (período de 01/02 a 30/04/2026, Araras, Kc 0,90), com a saída resumida:
+Execução do primeiro exemplo (período de 01/02 a 30/04/2026, Rio Claro, Kc 0,90), com a saída resumida:
 
 ```bash
 python analise/validacao_eto_e_linha_base.py 2026-02-01 2026-04-30
 ```
 
 ```
-89 dias validos | Araras-SP (-22.3572, -47.3823) | Kc = 0.9
-app com vento MAXIMO diario   vies=+0.006  MAE=0.121  RMSE=0.146  r=0.990  (mm/dia)
-ETc media: 3.64 mm/dia | dias com chuva >= 1 mm (proxy de previsao): 39 de 89
-= ETc media (conservadora)    3.64 mm/dia   economia do Exp.: 35.7%
-= ETc maxima do periodo       5.39 mm/dia   economia do Exp.: 56.6%
+89 dias validos | Rio Claro-SP (-22.4114, -47.5614) | Kc = 0.9
+app com vento MAXIMO diario   vies=+0.028  MAE=0.144  RMSE=0.182  r=0.985  (mm/dia)
+ETc media: 3.75 mm/dia | dias com chuva >= 1 mm (proxy de previsao): 43 de 89
+= ETc media (conservadora)    3.75 mm/dia   economia do Exp.: 41.6%
+= ETc maxima do periodo       5.59 mm/dia   economia do Exp.: 60.8%
 ```
 
 A economia depende da linha de base escolhida: quanto maior a lâmina do Controle A, maior a economia aparente do Experimental.

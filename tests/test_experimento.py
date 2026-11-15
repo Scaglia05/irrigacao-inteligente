@@ -20,7 +20,7 @@ TOKEN = "token-de-teste"
 CLIMA = {
     "date": "2026-11-10", "t_max": 25.4, "t_min": 13.8, "rh_mean": 71, "wind_speed_10m": 3.0,
     "solar_radiation": 22.82, "precipitation": 0.0, "precipitation_prob_24h": 35.0,
-    "elevation": 630, "latitude": -22.3572, "day_of_year": 314,
+    "elevation": 617, "latitude": -22.4114, "day_of_year": 314,
 }
 AUTH = {"X-API-Key": TOKEN}
 
@@ -127,7 +127,7 @@ class TestDecisao(Base):
         j = self.post("decidir", {}).get_json()
         self.assertEqual(set(j["resultados"]), {"controle_a", "controle_b", "experimental"})
         a, b, e = (j["resultados"][k] for k in ("controle_a", "controle_b", "experimental"))
-        self.assertEqual(a["volume_l"], 0.9)  # 3,6 mm x 0,25 m2
+        self.assertEqual(a["volume_l"], 0.94)  # 3,75 mm x 0,25 m2
         self.assertFalse(b["irrigar"])  # 40% acima do limiar de 35%
         self.assertEqual(e["codigo"], "etc")
         self.assertAlmostEqual(e["volume_l"], round(e["etc_mm_dia"] * 0.25, 2), places=2)
@@ -261,8 +261,8 @@ class TestPaginas(Base):
         with mock.patch("irrigation.weather.fetch_today_weather", return_value=clima()):
             j = self.c.post("/api/comparar", json={"area_m2": 1.0, "umidade_solo": 20}).get_json()
         self.assertTrue(j["ok"])
-        self.assertEqual(j["resultados"]["controle_a"]["volume_l"], 3.6)
-        self.assertEqual(j["resultados"]["controle_b"]["volume_l"], 3.6)
+        self.assertEqual(j["resultados"]["controle_a"]["volume_l"], 3.75)
+        self.assertEqual(j["resultados"]["controle_b"]["volume_l"], 3.75)
 
 
 if __name__ == "__main__":

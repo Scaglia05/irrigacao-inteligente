@@ -3,7 +3,7 @@
 
 const el = (id) => document.getElementById(id);
 
-let localAtual = { latitude: -22.3572, longitude: -47.3823, elevation: 630, name: "Araras", admin1: "SP" };
+let localAtual = { latitude: -22.4114, longitude: -47.5614, elevation: 617, name: "Rio Claro", admin1: "SP" };
 let chartUmidade = null;
 let chartConsumo = null;
 
@@ -189,7 +189,7 @@ function payloadBase() {
     vazao_l_h: parseFloat(el("vazaoLH").value) || 120,
     umidade_solo: parseFloat(el("umidadeSolo").value),
     fase_cultura: el("faseCultura").value,
-    lamina_fixa_mm: parseFloat(el("laminaFixa").value) || 3.6,
+    lamina_fixa_mm: parseFloat(el("laminaFixa").value) || 3.75,
   };
 }
 
