@@ -5,7 +5,7 @@ Analise reproduzivel para a etapa P2 do TCC (dados reais, sem simulacao de senso
 
   1. Valida a ETo calculada por irrigation/eto.py (Penman-Monteith FAO-56)
      contra a ETo diaria (et0_fao_evapotranspiration) da API Open-Meteo,
-     para Araras-SP.
+     para Rio Claro-SP, local do experimento.
   2. Mostra como a "economia" do grupo Experimental depende da linha de
      base escolhida para o Controle A (lamina fixa diaria).
 
@@ -28,7 +28,7 @@ from datetime import datetime
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from irrigation.eto import calculate_eto, WeatherDay, KC_RABANETE  # noqa: E402
 
-LAT, LON, ELEV = -22.3572, -47.3823, 630.0  # Araras-SP (mesmos valores padrao do app)
+LAT, LON, ELEV = -22.4114, -47.5614, 617.0  # Rio Claro-SP, local do experimento (mesmos valores padrao do app)
 ARCHIVE_URL = "https://archive-api.open-meteo.com/v1/archive"
 CHUVA_PREVISTA_MM = 1.0  # proxy de "previsao de chuva": chuva observada >= 1 mm no dia
 KC = KC_RABANETE["medio"]
@@ -115,7 +115,7 @@ def main():
         })
 
     n = len(dias)
-    print(f"Periodo {inicio} a {fim}: {n} dias validos | Araras-SP ({LAT}, {LON}) | Kc = {KC}")
+    print(f"Periodo {inicio} a {fim}: {n} dias validos | Rio Claro-SP ({LAT}, {LON}) | Kc = {KC}")
     om = [x["eto_openmeteo"] for x in dias]
     app_max = [x["eto_app_vento_max"] for x in dias]
     app_med = [x["eto_app_vento_medio"] for x in dias]

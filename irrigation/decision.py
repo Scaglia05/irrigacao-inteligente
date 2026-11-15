@@ -20,12 +20,12 @@ from .eto import calculate_eto, WeatherDay, KC_RABANETE
 UMIDADE_LIMIAR = 35.0
 
 # Lamina fixa por acionamento (mm) dos Grupos Controle A e B, configuravel na UI.
-# Valor padrao = ETc media diaria do rabanete (Kc medio 0,90) em Araras-SP entre
-# 01/02 e 30/04/2026 (3,64 mm/dia), calculada com a serie da Open-Meteo por
+# Valor padrao = ETc media diaria do rabanete (Kc medio 0,90) em Rio Claro-SP entre
+# 01/02 e 30/04/2026 (3,75 mm/dia), calculada com a serie da Open-Meteo por
 # analise/validacao_eto_e_linha_base.py. E uma linha de base conservadora: o
 # tempo fixo repoe, em media, o que a planta consome. Um valor muito acima da
 # demanda faria a "economia" do sistema experimental ser artefato do controle.
-LAMINA_FIXA_PADRAO_MM = 3.6
+LAMINA_FIXA_PADRAO_MM = 3.75
 
 # Probabilidade de chuva (%) acima da qual o sistema Experimental
 # cancela a irrigacao programada.

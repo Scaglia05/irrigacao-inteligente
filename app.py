@@ -32,7 +32,7 @@ app = Flask(__name__)
 app.register_blueprint(experimento_bp)
 
 # Cidade padrão usada quando o usuário ainda não digitou nada
-CIDADE_PADRAO = "Araras, SP"
+CIDADE_PADRAO = "Rio Claro, SP"
 
 
 @app.route("/")
@@ -65,9 +65,9 @@ def api_calcular():
     payload = request.get_json(force=True) or {}
 
     grupo = payload.get("grupo", "experimental")
-    latitude = float(payload.get("latitude", -22.3572))
-    longitude = float(payload.get("longitude", -47.3823))
-    elevation = float(payload.get("elevation", 630))
+    latitude = float(payload.get("latitude", -22.4114))
+    longitude = float(payload.get("longitude", -47.5614))
+    elevation = float(payload.get("elevation", 617))
     area_m2 = float(payload.get("area_m2", 1.0))
     vazao_l_h = float(payload.get("vazao_l_h", 120))
     umidade_solo = float(payload.get("umidade_solo", 40))
@@ -96,9 +96,9 @@ def api_comparar():
     """Calcula os três grupos de uma só vez, para a visão comparativa."""
     payload = request.get_json(force=True) or {}
 
-    latitude = float(payload.get("latitude", -22.3572))
-    longitude = float(payload.get("longitude", -47.3823))
-    elevation = float(payload.get("elevation", 630))
+    latitude = float(payload.get("latitude", -22.4114))
+    longitude = float(payload.get("longitude", -47.5614))
+    elevation = float(payload.get("elevation", 617))
     area_m2 = float(payload.get("area_m2", 1.0))
     vazao_l_h = float(payload.get("vazao_l_h", 120))
     umidade_solo = float(payload.get("umidade_solo", 40))
