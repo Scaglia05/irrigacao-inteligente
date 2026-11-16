@@ -62,7 +62,7 @@ def decidir_controle_a(area_m2: float, vazao_l_h: float, lamina_fixa_mm: float) 
         "estrategia": "Tempo fixo",
         "irrigar": True,
         "codigo": "programado",
-        "motivo": (f"Acionamento programado de {lamina_fixa_mm:.1f} mm ({calc['duracao_min']:.1f} min), "
+        "motivo": (f"Acionamento programado de {lamina_fixa_mm:g} mm ({calc['duracao_min']:.1f} min), "
                    "independente do clima ou da umidade do solo."),
         "duracao_min": calc["duracao_min"],
         "volume_l": calc["volume_l"],
