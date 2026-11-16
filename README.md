@@ -329,7 +329,7 @@ Instância atual: `https://irrigacao-inteligente-hh7z.onrender.com/`. No plano g
 
 ## Documentação
 
-Artigo da etapa pré-TCC (P2), com 20 páginas: introdução, referencial teórico, trabalhos correlatos, material e método, resultados esperados e conclusão. Também estão em `docs/p2/` os slides (`Apresentacao_TCC_P2.pdf`) e, em `docs/p1-beta/`, o projeto da etapa anterior.
+Artigo da etapa pré-TCC (P2), com 19 páginas: introdução, referencial teórico, trabalhos correlatos, material e método, resultados esperados e conclusão. Também estão em `docs/p2/` os slides (`Apresentacao_TCC_P2.pdf`) e, em `docs/p1-beta/`, o projeto da etapa anterior.
 
 [![Ler o documento](https://img.shields.io/badge/Documento-ler_o_PDF-B31B1B?style=for-the-badge)](docs/p2/Artigo_TCC_Irrigacao_Inteligente.pdf)
 
