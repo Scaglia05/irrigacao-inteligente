@@ -127,10 +127,10 @@ class TestDecisao(Base):
         j = self.post("decidir", {}).get_json()
         self.assertEqual(set(j["resultados"]), {"controle_a", "controle_b", "experimental"})
         a, b, e = (j["resultados"][k] for k in ("controle_a", "controle_b", "experimental"))
-        self.assertEqual(a["volume_l"], 0.94)  # 3,75 mm x 0,25 m2
+        self.assertEqual(a["volume_l"], 0.12)  # 3,75 mm x 0,031 m2
         self.assertFalse(b["irrigar"])  # 40% acima do limiar de 35%
         self.assertEqual(e["codigo"], "etc")
-        self.assertAlmostEqual(e["volume_l"], round(e["etc_mm_dia"] * 0.25, 2), places=2)
+        self.assertAlmostEqual(e["volume_l"], round(e["etc_mm_dia"] * 0.031, 2), places=2)
 
     def test_umidade_enviada_no_corpo_tem_prioridade(self):
         self.post("leituras", {"grupo": "controle_b", "umidade_pct": 60})
@@ -161,7 +161,7 @@ class TestDecisao(Base):
     def test_config_altera_a_decisao(self):
         self.c.put("/api/exp/config", json={"lamina_fixa_mm": 5.0}, headers=AUTH)
         j = self.post("decidir", {"grupo": "controle_a"}).get_json()
-        self.assertEqual(j["resultados"]["controle_a"]["volume_l"], 1.25)
+        self.assertEqual(j["resultados"]["controle_a"]["volume_l"], 0.15)  # 5,0 mm x 0,031 m2
 
 
 class TestMetricas(Base):

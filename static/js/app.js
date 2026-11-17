@@ -185,7 +185,7 @@ function payloadBase() {
     latitude: localAtual.latitude,
     longitude: localAtual.longitude,
     elevation: localAtual.elevation,
-    area_m2: parseFloat(el("areaM2").value) || 0.25,
+    area_m2: parseFloat(el("areaM2").value) || 0.031,
     vazao_l_h: parseFloat(el("vazaoLH").value) || 75,
     umidade_solo: parseFloat(el("umidadeSolo").value),
     fase_cultura: el("faseCultura").value,
