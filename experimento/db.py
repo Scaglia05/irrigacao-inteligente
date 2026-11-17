@@ -23,7 +23,7 @@ CONFIG_PADRAO = {
     "latitude": "-22.4114",
     "longitude": "-47.5614",
     "elevation": "617",
-    "area_m2": "0.25",
+    "area_m2": "0.031",
     "vazao_l_h": "75",
     "fase_cultura": "medio",
     "lamina_fixa_mm": "3.75",
